@@ -10,6 +10,7 @@ function App() {
   const [showInfoCard, setShowInfoCard] = useState(false)
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
   const [showDevBanner, setShowDevBanner] = useState(true) // Set to false to hide banner
+  const [isLoading, setIsLoading] = useState(false)
   const BaseURLDev = 'http://localhost:8000'
   const BaseURLProd = 'https://weather-api-py.vercel.app'
 
@@ -38,8 +39,10 @@ function App() {
     setWeather(null)
     setBgUrl('')
     setImageInfo(null)
+    setIsLoading(true)
     if (!location.trim()) {
       setError('Please enter a location.')
+      setIsLoading(false)
       return
     }
     try {
@@ -48,11 +51,13 @@ function App() {
       )
       if (!currentWeather.ok) {
         setError('Could not fetch weather. Try another location.')
+        setIsLoading(false)
         return
       }
       const weatherJSON = await currentWeather.json()
       if (weatherJSON.error) {
         setError(weatherJSON.error.message)
+        setIsLoading(false)
         return
       }
 
@@ -63,6 +68,8 @@ function App() {
     } catch (err) {
       setError('Error fetching weather data.')
       console.error(err)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -122,7 +129,7 @@ function App() {
         <button
           onClick={() => setShowInfoCard(!showInfoCard)}
           style={{
-            background: 'rgba(0, 0, 0, 0.7)',
+            background: '#764ba2',
             color: '#fff',
             border: 'none',
             borderRadius: '50%',
@@ -134,12 +141,21 @@ function App() {
             alignItems: 'center',
             justifyContent: 'center',
             flexDirection: 'column',
-            gap: '3px'
+            gap: '3px',
+            transition: 'all 0.3s ease'
+          }}
+          onMouseOver={e => {
+            e.currentTarget.style.background = '#6b46c1'
+            e.currentTarget.style.transform = 'scale(1.1)'
+          }}
+          onMouseOut={e => {
+            e.currentTarget.style.background = '#764ba2'
+            e.currentTarget.style.transform = 'scale(1)'
           }}
         >
-          <div style={{ width: isMobile ? '15px' : '18px', height: '2px', backgroundColor: '#fff' }}></div>
-          <div style={{ width: isMobile ? '15px' : '18px', height: '2px', backgroundColor: '#fff' }}></div>
-          <div style={{ width: isMobile ? '15px' : '18px', height: '2px', backgroundColor: '#fff' }}></div>
+          <div style={{ width: isMobile ? '15px' : '18px', height: '2px', backgroundColor: '#fff', pointerEvents: 'none' }}></div>
+          <div style={{ width: isMobile ? '15px' : '18px', height: '2px', backgroundColor: '#fff', pointerEvents: 'none' }}></div>
+          <div style={{ width: isMobile ? '15px' : '18px', height: '2px', backgroundColor: '#fff', pointerEvents: 'none' }}></div>
         </button>
         
         {showInfoCard && (
@@ -147,8 +163,8 @@ function App() {
             position: 'absolute',
             top: isMobile ? '40px' : '50px',
             left: '0',
-            background: 'rgba(0, 0, 0, 0.9)',
-            color: '#fff',
+            background: '#764ba2bb',
+            color: '#ffffffff',
             padding: isMobile ? '12px' : '16px',
             borderRadius: '8px',
             fontSize: isMobile ? '0.8rem' : '0.9rem',
@@ -164,7 +180,7 @@ function App() {
               <div>• Backend: Custom Python API</div>
             </div>
             
-            <div style={{ borderTop: '1px solid #444', paddingTop: '10px' }}>
+            <div style={{ borderTop: '1px solid #ffffffff', paddingTop: '10px' }}>
               <div style={{ marginBottom: '6px', fontSize: isMobile ? '0.9rem' : '1rem', fontWeight: '500' }}>
                 Created by Nathan Snook
               </div>
@@ -207,7 +223,31 @@ function App() {
           transition: 'background-image 0.8s'
         }}
       >
-        <h1 style={{textAlign: 'center', marginBottom: 20, color: '#222', fontSize: isMobile ? '1.5rem' : '2rem'}}>Weather Wise</h1>
+        <h1 style={{
+          textAlign: 'center', 
+          marginBottom: 20, 
+          fontSize: isMobile ? '2.2rem' : '3rem',
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+          fontWeight: '700',
+          fontFamily: '"Poppins", "Inter", "Segoe UI", sans-serif',
+          letterSpacing: '-0.02em',
+          lineHeight: '1.1',
+          textShadow: '0 4px 8px rgba(0,0,0,0.1)',
+          position: 'relative'
+        }}>
+          Weather Wise
+          <span style={{
+            fontSize: isMobile ? '1.2rem' : '1.5rem',
+            marginLeft: '8px',
+            display: 'inline-block',
+            animation: 'bounce 2s infinite'
+          }}>
+            ⛅
+          </span>
+        </h1>
         <div style={{
           marginBottom: 18, 
           display: 'flex', 
@@ -220,12 +260,14 @@ function App() {
             type="text"
             value={location}
             onChange={e => setLocation(e.target.value)}
-            placeholder="Enter your location"
+            placeholder="Checking the weather for…?"
             style={{
               padding: '8px', 
               fontSize: '1rem', 
               width: isMobile ? '100%' : '300px',
               borderRadius: 6, 
+              background: '#ffffffff',
+              color: '#222',
               border: '1px solid #bbb',
               marginBottom: isMobile ? '8px' : '0'
             }}
@@ -235,16 +277,45 @@ function App() {
               padding: '8px 16px',
               fontSize: '1rem',
               borderRadius: 6,
-              background: '#4a90e2',
-              color: '#fff',
+              background: isLoading ? '#9ca3af' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              color: '#ffffffff',
               border: 'none',
               height: '40px',
               minWidth: isMobile ? '100%' : '140px',
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
+              cursor: isLoading ? 'not-allowed' : 'pointer',
+              transition: 'all 0.3s ease',
+              opacity: isLoading ? 0.7 : 1,
+              transform: isLoading ? 'scale(0.98)' : 'scale(1)'
             }}
             onClick={handleGetWeather}
+            disabled={isLoading}
+            onMouseOver={e => {
+              if (!isLoading) {
+                e.target.style.background = 'linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%)'
+              }
+            }}
+            onMouseOut={e => {
+              if (!isLoading) {
+                e.target.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+              }
+            }}
           >
-            Current Forecast
+            {isLoading ? (
+              <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                <div style={{
+                  width: '16px',
+                  height: '16px',
+                  border: '2px solid transparent',
+                  borderTop: '2px solid #fff',
+                  borderRadius: '50%',
+                  animation: 'spin 1s linear infinite'
+                }}></div>
+                Loading...
+              </span>
+            ) : (
+              'Current Forecast'
+            )}
           </button>
         </div>
         {error && (
@@ -290,7 +361,7 @@ function App() {
             position: 'fixed',
             bottom: isMobile ? '10px' : '20px',
             right: isMobile ? '10px' : '20px',
-            background: 'rgba(0, 0, 0, 0.7)',
+            background: '#764ba2bb',
             color: '#fff',
             padding: isMobile ? '8px 10px' : '10px 12px',
             borderRadius: '8px',
@@ -327,6 +398,14 @@ function App() {
           </div>
         )}
       </div>
+      <style>
+        {`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}
+      </style>
     </>
   )
 }

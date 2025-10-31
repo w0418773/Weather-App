@@ -9,6 +9,7 @@ function App() {
   const [imageInfo, setImageInfo] = useState(null)
   const [showInfoCard, setShowInfoCard] = useState(false)
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
+  const [showDevBanner, setShowDevBanner] = useState(true) // Set to false to hide banner
   const BaseURLDev = 'http://localhost:8000'
   const BaseURLProd = 'https://weather-api-py.vercel.app'
 
@@ -67,10 +68,54 @@ function App() {
 
   return (
     <>
+      {/* Development Banner */}
+      {showDevBanner && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          background: 'linear-gradient(135deg, #ff6b6b, #ee5a24)',
+          color: '#fff',
+          padding: isMobile ? '8px' : '12px',
+          textAlign: 'center',
+          fontSize: isMobile ? '0.8rem' : '0.9rem',
+          fontWeight: '500',
+          zIndex: 9999,
+          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+          <div style={{ flex: 1 }}>
+            🚧 This website is still in development - Some features may not work as expected
+          </div>
+          <button
+            onClick={() => setShowDevBanner(false)}
+            style={{
+              background: 'rgba(255, 255, 255, 0.2)',
+              border: 'none',
+              color: '#fff',
+              borderRadius: '50%',
+              width: '24px',
+              height: '24px',
+              cursor: 'pointer',
+              fontSize: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginLeft: '10px'
+            }}
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
       {/* Info Card */}
       <div style={{
         position: 'fixed',
-        top: isMobile ? '10px' : '20px',
+        top: showDevBanner ? (isMobile ? '50px' : '60px') : (isMobile ? '10px' : '20px'),
         left: isMobile ? '10px' : '20px',
         zIndex: 1000
       }}>
@@ -150,7 +195,9 @@ function App() {
         className="weather-container"
         style={{
           maxWidth: isMobile ? '95vw' : 600,
-          margin: isMobile ? '20px auto' : '40px auto',
+          margin: showDevBanner 
+            ? (isMobile ? '70px auto 20px' : '80px auto 40px')
+            : (isMobile ? '20px auto' : '40px auto'),
           padding: isMobile ? 16 : 24,
           background: 'rgba(255, 255, 255, 0.5)',
           color: '#222',

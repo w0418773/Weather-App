@@ -11,6 +11,7 @@ function App() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
   const [showDevBanner, setShowDevBanner] = useState(true) // Set to false to hide banner
   const [isLoading, setIsLoading] = useState(false)
+  const [showRainAnimation, setShowRainAnimation] = useState(true)
   const BaseURLDev = 'http://localhost:8000'
   const BaseURLProd = 'https://weather-api-py.vercel.app'
 
@@ -40,6 +41,7 @@ function App() {
     setBgUrl('')
     setImageInfo(null)
     setIsLoading(true)
+    setShowRainAnimation(false) // Hide rain animation when user clicks
     if (!location.trim()) {
       setError('Please enter a location.')
       setIsLoading(false)
@@ -75,6 +77,58 @@ function App() {
 
   return (
     <>
+      {/* Rain Animation */}
+      {showRainAnimation && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          pointerEvents: 'none',
+          zIndex: 10000,
+          opacity: showRainAnimation ? 1 : 0,
+          transition: 'opacity 1s ease-out'
+        }}>
+          {[...Array(50)].map((_, i) => (
+            <div
+              key={i}
+              style={{
+                position: 'absolute',
+                left: `${Math.random() * 100}%`,
+                top: `-10px`,
+                width: '2px',
+                height: `${Math.random() * 20 + 10}px`,
+                background: 'linear-gradient(to bottom, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.3))',
+                borderRadius: '1px',
+                animation: `rainDrop ${Math.random() * 2 + 1}s linear infinite`,
+                animationDelay: `${Math.random() * 2}s`
+              }}
+            />
+          ))}
+        </div>
+      )}
+
+      <style>
+        {`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+          
+          @keyframes rainDrop {
+            0% {
+              transform: translateY(-10px);
+              opacity: 1;
+            }
+            100% {
+              transform: translateY(100vh);
+              opacity: 0.3;
+            }
+          }
+        `}
+      </style>
+
       {/* Development Banner */}
       {showDevBanner && (
         <div style={{
@@ -398,14 +452,6 @@ function App() {
           </div>
         )}
       </div>
-      <style>
-        {`
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-        `}
-      </style>
     </>
   )
 }

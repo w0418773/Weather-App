@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import './App.css'
 
 function App() {
@@ -12,6 +14,7 @@ function App() {
   const [showDevBanner, setShowDevBanner] = useState(true) // Set to false to hide banner
   const [isLoading, setIsLoading] = useState(false)
   const [showRainAnimation, setShowRainAnimation] = useState(true)
+  const [isGettingLocation, setIsGettingLocation] = useState(false)
   const BaseURLDev = 'http://localhost:8000'
   const BaseURLProd = 'https://weather-api-py.vercel.app'
 
@@ -73,6 +76,45 @@ function App() {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const handleGetLocation = async () => {
+    setIsGettingLocation(true)
+    setError('')
+    
+    if (!navigator.geolocation) {
+      setError('Geolocation is not supported by this browser.')
+      setIsGettingLocation(false)
+      return
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const { latitude, longitude } = position.coords
+          // Use reverse geocoding to get city name
+          const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`)
+          const data = await response.json()
+          
+          console.log('Reverse Geocoding Data:', data) // Debugging log
+          if (data.locality || data.city) {
+            setLocation(data.locality + ", " + data.countryName || data.city + ", " + data.countryName)
+          } else {
+            setLocation(`${latitude.toFixed(2)}, ${longitude.toFixed(2)}`)
+          }
+        } catch (err) {
+          setError('Could not get location name.')
+          console.error(err)
+        } finally {
+          setIsGettingLocation(false)
+        }
+      },
+      (error) => {
+        setError('Location access denied or unavailable.')
+        setIsGettingLocation(false)
+        console.error(error)
+      }
+    )
   }
 
   return (
@@ -310,22 +352,70 @@ function App() {
           gap: '8px',
           flexDirection: isMobile ? 'column' : 'row'
         }}>
-          <input
-            type="text"
-            value={location}
-            onChange={e => setLocation(e.target.value)}
-            placeholder="Checking the weather for…?"
-            style={{
-              padding: '8px', 
-              fontSize: '1rem', 
-              width: isMobile ? '100%' : '300px',
-              borderRadius: 6, 
-              background: '#ffffffff',
-              color: '#222',
-              border: '1px solid #bbb',
-              marginBottom: isMobile ? '8px' : '0'
-            }}
-          />
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            width: isMobile ? '100%' : 'auto'
+          }}>
+            <button
+              onClick={handleGetLocation}
+              disabled={isGettingLocation}
+              style={{
+                background: isGettingLocation ? '#9ca3af' : '#764ba2',
+                border: 'none',
+                borderRadius: '6px',
+                padding: '8px',
+                cursor: isGettingLocation ? 'not-allowed' : 'pointer',
+                transition: 'all 0.3s ease',
+                height: '40px',
+                minWidth: '40px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              onMouseOver={e => {
+                if (!isGettingLocation) {
+                  e.target.style.background = '#6b46c1'
+                }
+              }}
+              onMouseOut={e => {
+                if (!isGettingLocation) {
+                  e.target.style.background = '#764ba2'
+                }
+              }}
+            >
+              {isGettingLocation ? (
+                <div style={{
+                  width: '16px',
+                  height: '16px',
+                  border: '2px solid transparent',
+                  borderTop: '2px solid #fff',
+                  borderRadius: '50%',
+                  animation: 'spin 1s linear infinite'
+                }}></div>
+              ) : (
+                <FontAwesomeIcon icon={faLocationDot} style={{color: "#ffffffff", fontSize: '16px'}} />
+              )}
+            </button>
+            
+            <input
+              type="text"
+              value={location}
+              onChange={e => setLocation(e.target.value)}
+              placeholder="Checking the weather for…?"
+              style={{
+                padding: '8px', 
+                fontSize: '1rem', 
+                width: isMobile ? 'calc(100% - 56px)' : '300px',
+                borderRadius: 6, 
+                background: '#ffffffff',
+                color: '#222',
+                border: '1px solid #bbb'
+              }}
+            />
+          </div>
+          
           <button
             style={{
               padding: '8px 16px',
@@ -340,7 +430,8 @@ function App() {
               cursor: isLoading ? 'not-allowed' : 'pointer',
               transition: 'all 0.3s ease',
               opacity: isLoading ? 0.7 : 1,
-              transform: isLoading ? 'scale(0.98)' : 'scale(1)'
+              transform: isLoading ? 'scale(0.98)' : 'scale(1)',
+              marginTop: isMobile ? '8px' : '0'
             }}
             onClick={handleGetWeather}
             disabled={isLoading}

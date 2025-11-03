@@ -129,28 +129,12 @@ function App() {
       return
     }
 
-    // Check cache first - more thorough cache check
+    // Check cache first - exact match only for immediate response
     const cacheKey = query.toLowerCase().trim()
     if (suggestionsCache[cacheKey]) {
       setSuggestions(suggestionsCache[cacheKey])
       setShowSuggestions(suggestionsCache[cacheKey].length > 0)
       return
-    }
-
-    // Check for partial matches in cache for faster results
-    const cacheKeys = Object.keys(suggestionsCache)
-    const partialMatch = cacheKeys.find(key => 
-      key.startsWith(cacheKey) && key.length <= cacheKey.length + 2
-    )
-    
-    if (partialMatch && suggestionsCache[partialMatch]) {
-      const filteredResults = suggestionsCache[partialMatch].filter(item =>
-        item.name.toLowerCase().includes(cacheKey)
-      )
-      if (filteredResults.length > 0) {
-        setSuggestions(filteredResults)
-        setShowSuggestions(true)
-      }
     }
 
     setIsLoadingSuggestions(true)
@@ -159,7 +143,7 @@ function App() {
       const params = new URLSearchParams({
         format: 'json',
         addressdetails: '1',
-        limit: '6', // Reduced limit for faster response
+        limit: '6',
         'accept-language': 'en',
         featuretype: 'city',
         q: query.trim()
@@ -241,25 +225,33 @@ function App() {
         })
         .slice(0, 5)
       
-      // Cache the results
-      setSuggestionsCache(prev => ({
-        ...prev,
-        [cacheKey]: processedSuggestions
-      }))
-      
-      setSuggestions(processedSuggestions)
-      setShowSuggestions(processedSuggestions.length > 0)
+      // Only update if this is still the current query
+      const currentQuery = location.toLowerCase().trim()
+      if (currentQuery === cacheKey) {
+        // Cache the results
+        setSuggestionsCache(prev => ({
+          ...prev,
+          [cacheKey]: processedSuggestions
+        }))
+        
+        setSuggestions(processedSuggestions)
+        setShowSuggestions(processedSuggestions.length > 0)
+      }
       
     } catch (error) {
       console.error('Error fetching suggestions:', error)
-      setSuggestions([])
-      setShowSuggestions(false)
+      // Only clear if this is still the current query
+      const currentQuery = location.toLowerCase().trim()
+      if (currentQuery === query.toLowerCase().trim()) {
+        setSuggestions([])
+        setShowSuggestions(false)
+      }
     } finally {
       setIsLoadingSuggestions(false)
     }
   }
 
-  // Improved debounce with much shorter delay
+  // Add back debounce with very short delay
   const debounce = (func, wait) => {
     let timeout
     return function executedFunction(...args) {
@@ -274,6 +266,7 @@ function App() {
 
   const debouncedFetchSuggestions = debounce(fetchSuggestions, 100)
 
+  // Improved location change handler
   const handleLocationChange = (e) => {
     const value = e.target.value
     setLocation(value)
@@ -281,16 +274,20 @@ function App() {
     if (!value.trim()) {
       setSuggestions([])
       setShowSuggestions(false)
+      setIsLoadingSuggestions(false)
       return
     }
     
-    // Show suggestions immediately if we have cached results
+    // Show cached results immediately if available
     const cacheKey = value.toLowerCase().trim()
     if (suggestionsCache[cacheKey]) {
       setSuggestions(suggestionsCache[cacheKey])
       setShowSuggestions(suggestionsCache[cacheKey].length > 0)
+      return
     }
     
+    // Don't clear suggestions immediately - let the API call handle it
+    // Use debounced fetch for new queries
     debouncedFetchSuggestions(value)
   }
 

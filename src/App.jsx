@@ -15,6 +15,10 @@ function App() {
   const [isLoading, setIsLoading] = useState(false)
   const [showRainAnimation, setShowRainAnimation] = useState(true)
   const [isGettingLocation, setIsGettingLocation] = useState(false)
+  const [suggestions, setSuggestions] = useState([])
+  const [showSuggestions, setShowSuggestions] = useState(false)
+  const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(false)
+  const [suggestionsCache, setSuggestionsCache] = useState({})
   const BaseURLDev = 'http://localhost:8000'
   const BaseURLProd = 'https://weather-api-py.vercel.app'
 
@@ -115,6 +119,196 @@ function App() {
         console.error(error)
       }
     )
+  }
+
+  // Fetch city suggestions using optimized Nominatim API
+  const fetchSuggestions = async (query) => {
+    if (query.length < 2) {
+      setSuggestions([])
+      setShowSuggestions(false)
+      return
+    }
+
+    // Check cache first - more thorough cache check
+    const cacheKey = query.toLowerCase().trim()
+    if (suggestionsCache[cacheKey]) {
+      setSuggestions(suggestionsCache[cacheKey])
+      setShowSuggestions(suggestionsCache[cacheKey].length > 0)
+      return
+    }
+
+    // Check for partial matches in cache for faster results
+    const cacheKeys = Object.keys(suggestionsCache)
+    const partialMatch = cacheKeys.find(key => 
+      key.startsWith(cacheKey) && key.length <= cacheKey.length + 2
+    )
+    
+    if (partialMatch && suggestionsCache[partialMatch]) {
+      const filteredResults = suggestionsCache[partialMatch].filter(item =>
+        item.name.toLowerCase().includes(cacheKey)
+      )
+      if (filteredResults.length > 0) {
+        setSuggestions(filteredResults)
+        setShowSuggestions(true)
+      }
+    }
+
+    setIsLoadingSuggestions(true)
+    try {
+      // Optimized Nominatim parameters for better results
+      const params = new URLSearchParams({
+        format: 'json',
+        addressdetails: '1',
+        limit: '6', // Reduced limit for faster response
+        'accept-language': 'en',
+        featuretype: 'city',
+        q: query.trim()
+      })
+      
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/search?${params.toString()}`,
+        {
+          headers: {
+            'User-Agent': 'WeatherWise/1.0'
+          }
+        }
+      )
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch suggestions')
+      }
+      
+      const data = await response.json()
+      
+      // Improved filtering and scoring
+      const processedSuggestions = data
+        .filter(item => {
+          const isRelevantPlace = item.class === 'place' && 
+            ['city', 'town', 'village', 'municipality', 'hamlet', 'suburb', 'neighbourhood'].includes(item.type)
+          
+          const isBoundary = item.class === 'boundary' && item.type === 'administrative'
+          
+          return isRelevantPlace || isBoundary
+        })
+        .map(item => {
+          const name = item.name || item.display_name.split(',')[0]
+          const country = item.address?.country || ''
+          const state = item.address?.state || item.address?.province || item.address?.region || ''
+          const county = item.address?.county || ''
+          
+          // Calculate relevance score
+          const queryLower = query.toLowerCase()
+          const nameLower = name.toLowerCase()
+          let score = 0
+          
+          // Exact match gets highest score
+          if (nameLower === queryLower) score += 100
+          // Starts with query gets high score
+          else if (nameLower.startsWith(queryLower)) score += 50
+          // Contains query gets medium score
+          else if (nameLower.includes(queryLower)) score += 25
+          
+          // Prefer cities over villages/hamlets
+          if (item.type === 'city') score += 20
+          else if (item.type === 'town') score += 15
+          else if (item.type === 'municipality') score += 10
+          
+          // Prefer places with higher importance
+          if (item.importance) score += item.importance * 10
+          
+          return {
+            display_name: item.display_name,
+            name: name,
+            country: country,
+            state: state,
+            county: county,
+            lat: item.lat,
+            lon: item.lon,
+            type: item.type,
+            score: score,
+            importance: item.importance || 0
+          }
+        })
+        .sort((a, b) => {
+          if (b.score !== a.score) return b.score - a.score
+          return b.importance - a.importance
+        })
+        .filter((item, index, array) => {
+          const key = `${item.name.toLowerCase()}-${item.country.toLowerCase()}`
+          return array.findIndex(other => 
+            `${other.name.toLowerCase()}-${other.country.toLowerCase()}` === key
+          ) === index
+        })
+        .slice(0, 5)
+      
+      // Cache the results
+      setSuggestionsCache(prev => ({
+        ...prev,
+        [cacheKey]: processedSuggestions
+      }))
+      
+      setSuggestions(processedSuggestions)
+      setShowSuggestions(processedSuggestions.length > 0)
+      
+    } catch (error) {
+      console.error('Error fetching suggestions:', error)
+      setSuggestions([])
+      setShowSuggestions(false)
+    } finally {
+      setIsLoadingSuggestions(false)
+    }
+  }
+
+  // Improved debounce with much shorter delay
+  const debounce = (func, wait) => {
+    let timeout
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout)
+        func(...args)
+      }
+      clearTimeout(timeout)
+      timeout = setTimeout(later, wait)
+    }
+  }
+
+  const debouncedFetchSuggestions = debounce(fetchSuggestions, 100)
+
+  const handleLocationChange = (e) => {
+    const value = e.target.value
+    setLocation(value)
+    
+    if (!value.trim()) {
+      setSuggestions([])
+      setShowSuggestions(false)
+      return
+    }
+    
+    // Show suggestions immediately if we have cached results
+    const cacheKey = value.toLowerCase().trim()
+    if (suggestionsCache[cacheKey]) {
+      setSuggestions(suggestionsCache[cacheKey])
+      setShowSuggestions(suggestionsCache[cacheKey].length > 0)
+    }
+    
+    debouncedFetchSuggestions(value)
+  }
+
+  const handleSuggestionClick = (suggestion) => {
+    // Improved location string formatting
+    let locationString = suggestion.name
+    
+    if (suggestion.state && suggestion.country) {
+      locationString = `${suggestion.name}, ${suggestion.state}, ${suggestion.country}`
+    } else if (suggestion.county && suggestion.country) {
+      locationString = `${suggestion.name}, ${suggestion.county}, ${suggestion.country}`
+    } else if (suggestion.country) {
+      locationString = `${suggestion.name}, ${suggestion.country}`
+    }
+    
+    setLocation(locationString)
+    setSuggestions([])
+    setShowSuggestions(false)
   }
 
   return (
@@ -399,21 +593,93 @@ function App() {
               )}
             </button>
             
-            <input
-              type="text"
-              value={location}
-              onChange={e => setLocation(e.target.value)}
-              placeholder="Checking the weather for…?"
-              style={{
-                padding: '8px', 
-                fontSize: '1rem', 
-                width: isMobile ? 'calc(100% - 56px)' : '300px',
-                borderRadius: 6, 
-                background: '#ffffffff',
-                color: '#222',
-                border: '1px solid #bbb'
-              }}
-            />
+            <div style={{ position: 'relative', flex: 1 }}>
+              <input
+                type="text"
+                value={location}
+                onChange={handleLocationChange}
+                onFocus={() => {
+                  if (suggestions.length > 0) {
+                    setShowSuggestions(true)
+                  }
+                }}
+                onBlur={() => {
+                  setTimeout(() => setShowSuggestions(false), 150)
+                }}
+                placeholder="Checking the weather for…?"
+                style={{
+                  padding: '8px', 
+                  fontSize: '1rem', 
+                  width: isMobile ? '100%' : '300px',
+                  borderRadius: showSuggestions && suggestions.length > 0 ? '6px 6px 0 0' : '6px',
+                  background: '#ffffffff',
+                  color: '#222',
+                  border: '1px solid #bbb'
+                }}
+              />
+              
+              {/* Suggestions Dropdown */}
+              {showSuggestions && suggestions.length > 0 && (
+                <div style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  right: 0,
+                  background: '#fff',
+                  border: '1px solid #bbb',
+                  borderTop: 'none',
+                  borderRadius: '0 0 6px 6px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                  maxHeight: '200px',
+                  overflowY: 'auto',
+                  zIndex: 1001
+                }}>
+                  {suggestions.map((suggestion, index) => (
+                    <div
+                      key={`${suggestion.lat}-${suggestion.lon}-${index}`}
+                      onMouseDown={() => handleSuggestionClick(suggestion)}
+                      style={{
+                        padding: '12px',
+                        cursor: 'pointer',
+                        borderBottom: index < suggestions.length - 1 ? '1px solid #eee' : 'none',
+                        fontSize: '0.9rem',
+                        color: '#333',
+                        transition: 'background-color 0.2s'
+                      }}
+                      onMouseOver={e => e.target.style.background = '#f5f5f5'}
+                      onMouseOut={e => e.target.style.background = 'transparent'
+                      }
+                    >
+                      <div style={{ fontWeight: '500' }}>{suggestion.name}</div>
+                      <div style={{ fontSize: '0.8rem', color: '#666', marginTop: '2px' }}>
+                        {suggestion.state && `${suggestion.state}, `}
+                        {suggestion.country}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {/* Loading indicator for suggestions */}
+              {isLoadingSuggestions && (
+                <div style={{
+                  position: 'absolute',
+                  right: '8px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  pointerEvents: 'none'
+                }}>
+                  <div style={{
+                    width: '16px',
+                    height: '16px',
+                    border: '2px solid transparent',
+                    borderTop: '2px solid #666',
+                    borderRadius: '50%',
+                    animation: 'spin 1s linear infinite'
+                  }}></div>
+                </div>
+              )}
+            </div>
           </div>
           
           <button
@@ -468,15 +734,196 @@ function App() {
         )}
         {weather && (
           <div style={{textAlign: 'center', marginTop: 24, color: '#222'}}>
-            <h2 style={{marginBottom: 8, fontSize: isMobile ? '1.2rem' : '1.5rem'}}>{weather.location.name}, {weather.location.region ? weather.location.region + ', ' : ''}{weather.location.country}</h2>
-            <img src={weather.current.condition.icon} alt={weather.current.condition.text} style={{verticalAlign: 'middle'}} />
-            <div style={{fontSize: isMobile ? '1.5rem' : '2rem', fontWeight: 600, margin: '8px 0'}}>{weather.current.temp_c}°C</div>
-            <div style={{fontSize: isMobile ? '1rem' : '1.1rem', color: '#333'}}>{weather.current.condition.text}</div>
-            <div style={{marginTop: 10, fontSize: isMobile ? '0.85rem' : '0.95rem', color: '#444'}}>
-              Feels like: {weather.current.feelslike_c}°C<br />
-              Humidity: {weather.current.humidity}%<br />
-              Wind: {weather.current.wind_kph} kph
+            <h2 style={{marginBottom: 20, fontSize: isMobile ? '1.2rem' : '1.5rem'}}>{weather.location.name}, {weather.location.region ? weather.location.region + ', ' : ''}{weather.location.country}</h2>
+            
+            {/* Three Weather Cards Layout */}
+            <div style={{
+              display: 'flex',
+              gap: isMobile ? '12px' : '16px',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              marginBottom: 20
+            }}>
+              {/* Current Weather Card */}
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.9)',
+                border: '1px solid #ddd',
+                borderRadius: '16px',
+                padding: isMobile ? '16px' : '20px',
+                minWidth: isMobile ? '160px' : '180px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                transition: 'transform 0.2s ease',
+                cursor: 'pointer'
+              }}
+              onMouseOver={e => e.currentTarget.style.transform = 'translateY(-4px)'}
+              onMouseOut={e => e.currentTarget.style.transform = 'translateY(0px)'}
+              >
+                <div style={{
+                  fontSize: isMobile ? '1.3rem' : '1.5rem',
+                  fontWeight: '600',
+                  color: '#666',
+                  marginBottom: '12px'
+                }}>
+                  Now
+                </div>
+                <img 
+                  src={weather.current.condition.icon} 
+                  alt={weather.current.condition.text}
+                  style={{
+                    width: isMobile ? '64px' : '72px',
+                    height: isMobile ? '64px' : '72px',
+                  }}
+                />
+                <div style={{
+                  fontSize: isMobile ? '1.8rem' : '2.2rem',
+                  fontWeight: '700',
+                  color: '#333',
+                  marginBottom: '8px'
+                }}>
+                  {Math.round(weather.current.temp_c)}°C
+                </div>
+                <div style={{
+                  fontSize: isMobile ? '0.8rem' : '0.9rem',
+                  color: '#666',
+                  marginBottom: '8px'
+                }}>
+                  {weather.current.condition.text}
+                </div>
+                <div style={{
+                  fontSize: isMobile ? '0.7rem' : '0.8rem',
+                  color: '#888',
+                  lineHeight: '1.3'
+                }}>
+                  Feels like {Math.round(weather.current.feelslike_c)}°C<br />
+                  Humidity: {weather.current.humidity}%<br />
+                  Wind: {weather.current.wind_kph} km/h
+                </div>
+              </div>
+
+              {/* Next Hour Card */}
+              {weather.forecast && weather.forecast.forecastday && weather.forecast.forecastday[0] && weather.forecast.forecastday[0].hour[1] && (
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.9)',
+                  border: '1px solid #ddd',
+                  borderRadius: '16px',
+                  padding: isMobile ? '16px' : '20px',
+                  minWidth: isMobile ? '160px' : '180px',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                  transition: 'transform 0.2s ease',
+                  cursor: 'pointer'
+                }}
+                onMouseOver={e => e.currentTarget.style.transform = 'translateY(-4px)'}
+                onMouseOut={e => e.currentTarget.style.transform = 'translateY(0px)'}
+                >
+                  <div style={{
+                    fontSize: isMobile ? '0.9rem' : '1rem',
+                    fontWeight: '600',
+                    color: '#666',
+                    marginBottom: '12px'
+                  }}>
+                    {(() => {
+                      const hour = new Date(weather.forecast.forecastday[0].hour[1].time).getHours()
+                      return hour === 0 ? '12 AM' : hour <= 12 ? `${hour} AM` : `${hour - 12} PM`
+                    })()}
+                  </div>
+                  <img 
+                    src={weather.forecast.forecastday[0].hour[1].condition.icon} 
+                    alt={weather.forecast.forecastday[0].hour[1].condition.text}
+                    style={{
+                      width: isMobile ? '64px' : '72px',
+                      height: isMobile ? '64px' : '72px',
+                      marginBottom: '12px'
+                    }}
+                  />
+                  <div style={{
+                    fontSize: isMobile ? '1.8rem' : '2.2rem',
+                    fontWeight: '700',
+                    color: '#333',
+                    marginBottom: '8px'
+                  }}>
+                    {Math.round(weather.forecast.forecastday[0].hour[1].temp_c)}°C
+                  </div>
+                  <div style={{
+                    fontSize: isMobile ? '0.8rem' : '0.9rem',
+                    color: '#666',
+                    marginBottom: '8px'
+                  }}>
+                    {weather.forecast.forecastday[0].hour[1].condition.text}
+                  </div>
+                  <div style={{
+                    fontSize: isMobile ? '0.7rem' : '0.8rem',
+                    color: '#888',
+                    lineHeight: '1.3'
+                  }}>
+                    Feels like {Math.round(weather.forecast.forecastday[0].hour[1].feelslike_c)}°C<br />
+                    Humidity: {weather.forecast.forecastday[0].hour[1].humidity}%
+                    Wind: {weather.forecast.forecastday[0].hour[1].wind_kph} km/h
+                  </div>
+                </div>
+              )}
+
+              {/* Third Hour Card */}
+              {weather.forecast && weather.forecast.forecastday && weather.forecast.forecastday[0] && weather.forecast.forecastday[0].hour[2] && (
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.9)',
+                  border: '1px solid #ddd',
+                  borderRadius: '16px',
+                  padding: isMobile ? '16px' : '20px',
+                  minWidth: isMobile ? '160px' : '180px',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                  transition: 'transform 0.2s ease',
+                  cursor: 'pointer'
+                }}
+                onMouseOver={e => e.currentTarget.style.transform = 'translateY(-4px)'}
+                onMouseOut={e => e.currentTarget.style.transform = 'translateY(0px)'}
+                >
+                  <div style={{
+                    fontSize: isMobile ? '0.9rem' : '1rem',
+                    fontWeight: '600',
+                    color: '#666',
+                    marginBottom: '12px'
+                  }}>
+                    {(() => {
+                      const hour = new Date(weather.forecast.forecastday[0].hour[2].time).getHours()
+                      return hour === 0 ? '12 AM' : hour <= 12 ? `${hour} AM` : `${hour - 12} PM`
+                    })()}
+                  </div>
+                  <img 
+                    src={weather.forecast.forecastday[0].hour[2].condition.icon} 
+                    alt={weather.forecast.forecastday[0].hour[2].condition.text}
+                    style={{
+                      width: isMobile ? '64px' : '72px',
+                      height: isMobile ? '64px' : '72px',
+                      marginBottom: '12px'
+                    }}
+                  />
+                  <div style={{
+                    fontSize: isMobile ? '1.8rem' : '2.2rem',
+                    fontWeight: '700',
+                    color: '#333',
+                    marginBottom: '8px'
+                  }}>
+                    {Math.round(weather.forecast.forecastday[0].hour[2].temp_c)}°C
+                  </div>
+                  <div style={{
+                    fontSize: isMobile ? '0.8rem' : '0.9rem',
+                    color: '#666',
+                    marginBottom: '8px'
+                  }}>
+                    {weather.forecast.forecastday[0].hour[2].condition.text}
+                  </div>
+                  <div style={{
+                    fontSize: isMobile ? '0.7rem' : '0.8rem',
+                    color: '#888',
+                    lineHeight: '1.3'
+                  }}>
+                    Feels like {Math.round(weather.forecast.forecastday[0].hour[2].feelslike_c)}°C<br />
+                    Humidity: {weather.forecast.forecastday[0].hour[2].humidity}%
+                  </div>
+                </div>
+              )}
             </div>
+
             <button
               style={{
                 marginTop: 20,

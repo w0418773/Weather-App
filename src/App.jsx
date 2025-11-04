@@ -282,7 +282,14 @@ function App() {
             <div style={{ marginBottom: '10px', lineHeight: '1.4', textAlign: 'left' }}>
               <div>• Weather : WeatherAPI</div>
               <div>• Images: Unsplash API</div>
-              <div>• Backend: Custom Python API</div>
+              <div>• Backend: <a 
+                href="https://github.com/w0418773/Weather_API_py_PUBLIC" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ color: '#87ceeb', textDecoration: 'none' }}
+              >
+                Custom Python API
+              </a></div>
             </div>
             
             {/* Future Features Section */}

@@ -52,7 +52,7 @@ function App() {
     }
     try {
       const currentWeather = await fetch(
-        BaseURLProd + `/weather/${location}`
+        BaseURLDev + `/hourly/${location}`
       )
       if (!currentWeather.ok) {
         setError('Could not fetch weather. Try another location.')
@@ -65,8 +65,8 @@ function App() {
         setIsLoading(false)
         return
       }
-
-      setWeather(weatherJSON.weather)
+      console.log('Weather Data:', weatherJSON) 
+      setWeather(weatherJSON)
       setBgUrl(weatherJSON.image.url)
       setImageInfo(weatherJSON.image)
       
@@ -180,17 +180,22 @@ function App() {
           right: 0,
           background: 'linear-gradient(135deg, #ff6b6b, #ee5a24)',
           color: '#fff',
-          padding: isMobile ? '8px' : '12px',
+          padding: isMobile ? '6px 8px' : '12px',
           textAlign: 'center',
-          fontSize: isMobile ? '0.8rem' : '0.9rem',
+          fontSize: isMobile ? '0.75rem' : '0.9rem',
           fontWeight: '500',
-          zIndex: 9999,
+          zIndex: 10001,
           boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center'
+          alignItems: 'center',
+          minHeight: isMobile ? '40px' : '48px'
         }}>
-          <div style={{ flex: 1 }}>
+          <div style={{ 
+            flex: 1,
+            paddingRight: isMobile ? '8px' : '10px',
+            lineHeight: isMobile ? '1.2' : '1.4'
+          }}>
             🚧 This website is still in development - Some features may not work as expected
           </div>
           <button
@@ -200,14 +205,14 @@ function App() {
               border: 'none',
               color: '#fff',
               borderRadius: '50%',
-              width: '24px',
-              height: '24px',
+              width: isMobile ? '20px' : '24px',
+              height: isMobile ? '20px' : '24px',
               cursor: 'pointer',
-              fontSize: '14px',
+              fontSize: isMobile ? '12px' : '14px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              marginLeft: '10px'
+              flexShrink: 0
             }}
           >
             ✕
@@ -468,15 +473,199 @@ function App() {
         )}
         {weather && (
           <div style={{textAlign: 'center', marginTop: 24, color: '#222'}}>
-            <h2 style={{marginBottom: 8, fontSize: isMobile ? '1.2rem' : '1.5rem'}}>{weather.location.name}, {weather.location.region ? weather.location.region + ', ' : ''}{weather.location.country}</h2>
-            <img src={weather.current.condition.icon} alt={weather.current.condition.text} style={{verticalAlign: 'middle'}} />
-            <div style={{fontSize: isMobile ? '1.5rem' : '2rem', fontWeight: 600, margin: '8px 0'}}>{weather.current.temp_c}°C</div>
-            <div style={{fontSize: isMobile ? '1rem' : '1.1rem', color: '#333'}}>{weather.current.condition.text}</div>
-            <div style={{marginTop: 10, fontSize: isMobile ? '0.85rem' : '0.95rem', color: '#444'}}>
-              Feels like: {weather.current.feelslike_c}°C<br />
-              Humidity: {weather.current.humidity}%<br />
-              Wind: {weather.current.wind_kph} kph
+            <h2 style={{marginBottom: 20, fontSize: isMobile ? '1.2rem' : '1.5rem'}}>{weather.location.name}, {weather.location.region ? weather.location.region + ', ' : ''}{weather.location.country}</h2>
+            
+            {/* Three Weather Cards Layout */}
+            <div style={{
+              display: 'flex',
+              gap: isMobile ? '8px' : '12px',
+              justifyContent: 'center',
+              flexWrap: isMobile ? 'wrap' : 'nowrap',
+              marginBottom: 20,
+              overflowX: isMobile ? 'visible' : 'visible'
+            }}>
+              {/* Current Weather Card */}
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.9)',
+                border: '1px solid #ddd',
+                borderRadius: '16px',
+                padding: isMobile ? '12px' : '16px',
+                minWidth: isMobile ? '140px' : '160px',
+                flex: '1 1 0',
+                maxWidth: isMobile ? '140px' : '180px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                transition: 'transform 0.2s ease',
+                cursor: 'pointer'
+              }}
+              onMouseOver={e => e.currentTarget.style.transform = 'translateY(-4px)'}
+              onMouseOut={e => e.currentTarget.style.transform = 'translateY(0px)'}
+              >
+                <div style={{
+                  fontSize: isMobile ? '1.0rem' : '1.2rem',
+                  fontWeight: '600',
+                  color: '#666',
+                  marginBottom: '8px'
+                }}>
+                  Now
+                </div>
+                <img 
+                  src={weather.current.condition.icon} 
+                  alt={weather.current.condition.text}
+                  style={{
+                    width: isMobile ? '48px' : '64px',
+                    height: isMobile ? '48px' : '64px',
+                    marginBottom: '8px'
+                  }}
+                />
+                <div style={{
+                  fontSize: isMobile ? '1.4rem' : '1.8rem',
+                  fontWeight: '700',
+                  color: '#333',
+                  marginBottom: '6px'
+                }}>
+                  {Math.round(weather.current.temp_c)}°C
+                </div>
+                <div style={{
+                  fontSize: isMobile ? '0.7rem' : '0.8rem',
+                  color: '#666',
+                  marginBottom: '6px'
+                }}>
+                  {weather.current.condition.text}
+                </div>
+                <div style={{
+                  fontSize: isMobile ? '0.6rem' : '0.7rem',
+                  color: '#888',
+                  lineHeight: '1.2'
+                }}>
+                  Feels like {Math.round(weather.current.feelslike_c)}°C<br />
+                  Humidity: {weather.current.humidity}%<br />
+                  Wind: {weather.current.wind_kph} km/h
+                </div>
+              </div>
+
+              {/* Next Hour Card */}
+              {weather.hourly.length > 0 && (
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.9)',
+                  border: '1px solid #ddd',
+                  borderRadius: '16px',
+                  padding: isMobile ? '12px' : '16px',
+                  minWidth: isMobile ? '140px' : '160px',
+                  flex: '1 1 0',
+                  maxWidth: isMobile ? '140px' : '180px',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                  transition: 'transform 0.2s ease',
+                  cursor: 'pointer'
+                }}
+                onMouseOver={e => e.currentTarget.style.transform = 'translateY(-4px)'}
+                onMouseOut={e => e.currentTarget.style.transform = 'translateY(0px)'}
+                >
+                  <div style={{
+                    fontSize: isMobile ? '1.0rem' : '1.2rem',
+                    fontWeight: '600',
+                    color: '#666',
+                    marginBottom: '8px'
+                  }}>
+                    +1 Hour
+                  </div>
+                  <img 
+                    src={weather.hourly[0].condition.icon} 
+                    alt={weather.hourly[0].condition.text}
+                    style={{
+                      width: isMobile ? '48px' : '64px',
+                      height: isMobile ? '48px' : '64px',
+                      marginBottom: '8px'
+                    }}
+                  />
+                  <div style={{
+                    fontSize: isMobile ? '1.4rem' : '1.8rem',
+                    fontWeight: '700',
+                    color: '#333',
+                    marginBottom: '6px'
+                  }}>
+                    {Math.round(weather.hourly[0].temp_c)}°C
+                  </div>
+                  <div style={{
+                    fontSize: isMobile ? '0.7rem' : '0.8rem',
+                    color: '#666',
+                    marginBottom: '6px'
+                  }}>
+                    {weather.hourly[0].condition.text}
+                  </div>
+                  <div style={{
+                    fontSize: isMobile ? '0.6rem' : '0.7rem',
+                    color: '#888',
+                    lineHeight: '1.2'
+                  }}>
+                    Feels like {Math.round(weather.hourly[0].feelslike_c)}°C<br />
+                    Humidity: {weather.hourly[0].humidity}%<br />
+                    Wind: {weather.hourly[0].wind_kph} km/h
+                  </div>
+                </div>
+              )}
+
+              {/* Two Hours Later Card */}
+              {weather.hourly.length >= 2 && (
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.9)',
+                  border: '1px solid #ddd',
+                  borderRadius: '16px',
+                  padding: isMobile ? '12px' : '16px',
+                  minWidth: isMobile ? '140px' : '160px',
+                  flex: '1 1 0',
+                  maxWidth: isMobile ? '140px' : '180px',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                  transition: 'transform 0.2s ease',
+                  cursor: 'pointer'
+                }}
+                onMouseOver={e => e.currentTarget.style.transform = 'translateY(-4px)'}
+                onMouseOut={e => e.currentTarget.style.transform = 'translateY(0px)'}
+                >
+                  <div style={{
+                    fontSize: isMobile ? '1.0rem' : '1.2rem',
+                    fontWeight: '600',
+                    color: '#666',
+                    marginBottom: '8px'
+                  }}>
+                    +2 Hours
+                  </div>
+                  <img 
+                    src={weather.hourly[1].condition.icon} 
+                    alt={weather.hourly[1].condition.text}
+                    style={{
+                      width: isMobile ? '48px' : '64px',
+                      height: isMobile ? '48px' : '64px',
+                      marginBottom: '8px'
+                    }}
+                  />
+                  <div style={{
+                    fontSize: isMobile ? '1.4rem' : '1.8rem',
+                    fontWeight: '700',
+                    color: '#333',
+                    marginBottom: '6px'
+                  }}>
+                    {Math.round(weather.hourly[1].temp_c)}°C
+                  </div>
+                  <div style={{
+                    fontSize: isMobile ? '0.7rem' : '0.8rem',
+                    color: '#666',
+                    marginBottom: '6px'
+                  }}>
+                    {weather.hourly[1].condition.text}
+                  </div>
+                  <div style={{
+                    fontSize: isMobile ? '0.6rem' : '0.7rem',
+                    color: '#888',
+                    lineHeight: '1.2'
+                  }}>
+                    Feels like {Math.round(weather.hourly[1].feelslike_c)}°C<br />
+                    Humidity: {weather.hourly[1].humidity}%<br />
+                    Wind: {weather.hourly[1].wind_kph} km/h
+                  </div>
+                </div>
+              )}
             </div>
+
             <button
               style={{
                 marginTop: 20,
@@ -504,19 +693,24 @@ function App() {
         {imageInfo && (
           <div style={{
             position: 'fixed',
-            bottom: isMobile ? '10px' : '20px',
-            right: isMobile ? '10px' : '20px',
+            bottom: isMobile ? '8px' : '20px',
+            right: isMobile ? '8px' : '20px',
+            left: isMobile ? '8px' : 'auto',
             background: '#764ba2bb',
             color: '#fff',
-            padding: isMobile ? '8px 10px' : '10px 12px',
-            borderRadius: '8px',
-            fontSize: isMobile ? '0.75rem' : '0.85rem',
-            maxWidth: isMobile ? '200px' : '250px',
+            padding: isMobile ? '6px 8px' : '10px 12px',
+            borderRadius: '6px',
+            fontSize: isMobile ? '0.7rem' : '0.85rem',
+            maxWidth: isMobile ? 'none' : '250px',
             backdropFilter: 'blur(5px)',
             boxShadow: '0 2px 10px rgba(0, 0, 0, 0.3)',
             zIndex: 1000
           }}>
-            <div style={{ marginBottom: '4px', fontWeight: '500' }}>
+            <div style={{ 
+              marginBottom: '2px', 
+              fontWeight: '500',
+              lineHeight: isMobile ? '1.2' : '1.4'
+            }}>
               Photo by{' '}
               <a 
                 href={imageInfo.photographer.link} 
@@ -527,7 +721,11 @@ function App() {
                 {imageInfo.photographer.name}
               </a>
             </div>
-            <div style={{ fontSize: isMobile ? '0.7rem' : '0.8rem', color: '#ccc' }}>
+            <div style={{ 
+              fontSize: isMobile ? '0.65rem' : '0.8rem', 
+              color: '#ccc',
+              lineHeight: isMobile ? '1.2' : '1.4'
+            }}>
               <div>📍 {imageInfo.location || 'Unknown location'}</div>
               <div style={{ marginTop: '2px' }}>
                 <a 

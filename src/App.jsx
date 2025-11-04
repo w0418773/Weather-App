@@ -463,6 +463,11 @@ function App() {
               type="text"
               value={location}
               onChange={e => setLocation(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !isLoading) {
+                  handleGetWeather()
+                }
+              }}
               placeholder="Checking the weather for…?"
               style={{
                 padding: '8px', 

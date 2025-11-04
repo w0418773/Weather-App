@@ -478,21 +478,22 @@ function App() {
             {/* Three Weather Cards Layout */}
             <div style={{
               display: 'flex',
-              gap: isMobile ? '8px' : '12px',
+              gap: isMobile ? '12px' : '12px',
               justifyContent: 'center',
-              flexWrap: isMobile ? 'wrap' : 'nowrap',
-              marginBottom: 20,
-              overflowX: isMobile ? 'visible' : 'visible'
+              flexDirection: isMobile ? 'column' : 'row',
+              alignItems: isMobile ? 'center' : 'stretch',
+              marginBottom: 20
             }}>
               {/* Current Weather Card */}
               <div style={{
                 background: 'rgba(255, 255, 255, 0.9)',
                 border: '1px solid #ddd',
                 borderRadius: '16px',
-                padding: isMobile ? '12px' : '16px',
-                minWidth: isMobile ? '140px' : '160px',
-                flex: '1 1 0',
-                maxWidth: isMobile ? '140px' : '180px',
+                padding: isMobile ? '16px' : '16px',
+                minWidth: isMobile ? '280px' : '160px',
+                flex: isMobile ? 'none' : '1 1 0',
+                maxWidth: isMobile ? '320px' : '180px',
+                width: isMobile ? '90%' : 'auto',
                 boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
                 transition: 'transform 0.2s ease',
                 cursor: 'pointer'
@@ -501,7 +502,7 @@ function App() {
               onMouseOut={e => e.currentTarget.style.transform = 'translateY(0px)'}
               >
                 <div style={{
-                  fontSize: isMobile ? '1.0rem' : '1.2rem',
+                  fontSize: isMobile ? '1.2rem' : '1.2rem',
                   fontWeight: '600',
                   color: '#666',
                   marginBottom: '8px'
@@ -512,13 +513,13 @@ function App() {
                   src={weather.current.condition.icon} 
                   alt={weather.current.condition.text}
                   style={{
-                    width: isMobile ? '48px' : '64px',
-                    height: isMobile ? '48px' : '64px',
+                    width: isMobile ? '64px' : '64px',
+                    height: isMobile ? '64px' : '64px',
                     marginBottom: '8px'
                   }}
                 />
                 <div style={{
-                  fontSize: isMobile ? '1.4rem' : '1.8rem',
+                  fontSize: isMobile ? '1.8rem' : '1.8rem',
                   fontWeight: '700',
                   color: '#333',
                   marginBottom: '6px'
@@ -526,14 +527,14 @@ function App() {
                   {Math.round(weather.current.temp_c)}°C
                 </div>
                 <div style={{
-                  fontSize: isMobile ? '0.7rem' : '0.8rem',
+                  fontSize: isMobile ? '1.0rem' : '1.0rem',
                   color: '#666',
                   marginBottom: '6px'
                 }}>
                   {weather.current.condition.text}
                 </div>
                 <div style={{
-                  fontSize: isMobile ? '0.6rem' : '0.7rem',
+                  fontSize: isMobile ? '0.9rem' : '0.9rem',
                   color: '#888',
                   lineHeight: '1.2'
                 }}>
@@ -549,10 +550,11 @@ function App() {
                   background: 'rgba(255, 255, 255, 0.9)',
                   border: '1px solid #ddd',
                   borderRadius: '16px',
-                  padding: isMobile ? '12px' : '16px',
-                  minWidth: isMobile ? '140px' : '160px',
-                  flex: '1 1 0',
-                  maxWidth: isMobile ? '140px' : '180px',
+                  padding: isMobile ? '16px' : '16px',
+                  minWidth: isMobile ? '280px' : '160px',
+                  flex: isMobile ? 'none' : '1 1 0',
+                  maxWidth: isMobile ? '320px' : '180px',
+                  width: isMobile ? '90%' : 'auto',
                   boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
                   transition: 'transform 0.2s ease',
                   cursor: 'pointer'
@@ -561,7 +563,7 @@ function App() {
                 onMouseOut={e => e.currentTarget.style.transform = 'translateY(0px)'}
                 >
                   <div style={{
-                    fontSize: isMobile ? '1.0rem' : '1.2rem',
+                    fontSize: isMobile ? '1.2rem' : '1.2rem',
                     fontWeight: '600',
                     color: '#666',
                     marginBottom: '8px'
@@ -572,13 +574,13 @@ function App() {
                     src={weather.hourly[0].condition.icon} 
                     alt={weather.hourly[0].condition.text}
                     style={{
-                      width: isMobile ? '48px' : '64px',
-                      height: isMobile ? '48px' : '64px',
+                      width: isMobile ? '64px' : '64px',
+                      height: isMobile ? '64px' : '64px',
                       marginBottom: '8px'
                     }}
                   />
                   <div style={{
-                    fontSize: isMobile ? '1.4rem' : '1.8rem',
+                    fontSize: isMobile ? '1.8rem' : '1.8rem',
                     fontWeight: '700',
                     color: '#333',
                     marginBottom: '6px'
@@ -586,14 +588,14 @@ function App() {
                     {Math.round(weather.hourly[0].temp_c)}°C
                   </div>
                   <div style={{
-                    fontSize: isMobile ? '0.7rem' : '0.8rem',
+                    fontSize: isMobile ? '1.0rem' : '1.0rem',
                     color: '#666',
                     marginBottom: '6px'
                   }}>
                     {weather.hourly[0].condition.text}
                   </div>
                   <div style={{
-                    fontSize: isMobile ? '0.6rem' : '0.7rem',
+                    fontSize: isMobile ? '0.9rem' : '0.9rem',
                     color: '#888',
                     lineHeight: '1.2'
                   }}>
@@ -610,10 +612,11 @@ function App() {
                   background: 'rgba(255, 255, 255, 0.9)',
                   border: '1px solid #ddd',
                   borderRadius: '16px',
-                  padding: isMobile ? '12px' : '16px',
-                  minWidth: isMobile ? '140px' : '160px',
-                  flex: '1 1 0',
-                  maxWidth: isMobile ? '140px' : '180px',
+                  padding: isMobile ? '16px' : '16px',
+                  minWidth: isMobile ? '280px' : '160px',
+                  flex: isMobile ? 'none' : '1 1 0',
+                  maxWidth: isMobile ? '320px' : '180px',
+                  width: isMobile ? '90%' : 'auto',
                   boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
                   transition: 'transform 0.2s ease',
                   cursor: 'pointer'
@@ -622,7 +625,7 @@ function App() {
                 onMouseOut={e => e.currentTarget.style.transform = 'translateY(0px)'}
                 >
                   <div style={{
-                    fontSize: isMobile ? '1.0rem' : '1.2rem',
+                    fontSize: isMobile ? '1.2rem' : '1.2rem',
                     fontWeight: '600',
                     color: '#666',
                     marginBottom: '8px'
@@ -633,13 +636,13 @@ function App() {
                     src={weather.hourly[1].condition.icon} 
                     alt={weather.hourly[1].condition.text}
                     style={{
-                      width: isMobile ? '48px' : '64px',
-                      height: isMobile ? '48px' : '64px',
+                      width: isMobile ? '64px' : '64px',
+                      height: isMobile ? '64px' : '64px',
                       marginBottom: '8px'
                     }}
                   />
                   <div style={{
-                    fontSize: isMobile ? '1.4rem' : '1.8rem',
+                    fontSize: isMobile ? '1.8rem' : '1.8rem',
                     fontWeight: '700',
                     color: '#333',
                     marginBottom: '6px'
@@ -647,14 +650,14 @@ function App() {
                     {Math.round(weather.hourly[1].temp_c)}°C
                   </div>
                   <div style={{
-                    fontSize: isMobile ? '0.7rem' : '0.8rem',
+                    fontSize: isMobile ? '1.0rem' : '1.0rem',
                     color: '#666',
                     marginBottom: '6px'
                   }}>
                     {weather.hourly[1].condition.text}
                   </div>
                   <div style={{
-                    fontSize: isMobile ? '0.6rem' : '0.7rem',
+                    fontSize: isMobile ? '0.9rem' : '0.9rem',
                     color: '#888',
                     lineHeight: '1.2'
                   }}>

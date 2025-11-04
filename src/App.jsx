@@ -52,7 +52,7 @@ function App() {
     }
     try {
       const currentWeather = await fetch(
-        BaseURLDev + `/hourly/${location}`
+        BaseURLProd + `/hourly/${location}`
       )
       if (!currentWeather.ok) {
         setError('Could not fetch weather. Try another location.')

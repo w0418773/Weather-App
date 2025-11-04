@@ -1,14 +1,9 @@
 {
   "futureFeatures": [
-    "Weekly weather forecast",
-    "Weather alerts & notifications",
+    "Three day weather forecast",
+    "Sevre weather alerts",
     "Interactive weather maps",
-    "Historical weather data",
-    "Weather widgets for desktop",
     "Dark mode theme",
-    "Multiple location tracking",
-    "Weather-based recommendations",
-    "Social sharing features",
-    "Offline weather cache"
+    "Weather-based recommendations"
   ]
 }

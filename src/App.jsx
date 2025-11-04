@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
+import futureFeatures from './assets/futureFeatures.json'
 import './App.css'
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false)
   const [showRainAnimation, setShowRainAnimation] = useState(true)
   const [isGettingLocation, setIsGettingLocation] = useState(false)
+  const [showFutureFeatures, setShowFutureFeatures] = useState(false)
   const BaseURLDev = 'http://localhost:8000'
   const BaseURLProd = 'https://weather-api-py.vercel.app'
 
@@ -269,7 +271,9 @@ function App() {
             padding: isMobile ? '12px' : '16px',
             borderRadius: '8px',
             fontSize: isMobile ? '0.8rem' : '0.9rem',
-            width: isMobile ? '180px' : '200px',
+            width: isMobile ? '200px' : '240px',
+            maxHeight: isMobile ? '70vh' : '80vh',
+            overflowY: 'auto',
             backdropFilter: 'blur(5px)',
             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
             textAlign: 'center'
@@ -279,6 +283,49 @@ function App() {
               <div>• Weather : WeatherAPI</div>
               <div>• Images: Unsplash API</div>
               <div>• Backend: Custom Python API</div>
+            </div>
+            
+            {/* Future Features Section */}
+            <div style={{ borderTop: '1px solid #ffffffff', paddingTop: '10px', marginBottom: '10px' }}>
+              <button
+                onClick={() => setShowFutureFeatures(!showFutureFeatures)}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.2)',
+                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  color: '#fff',
+                  borderRadius: '4px',
+                  padding: '6px 12px',
+                  cursor: 'pointer',
+                  fontSize: isMobile ? '0.8rem' : '0.9rem',
+                  width: '100%',
+                  marginBottom: '8px',
+                  transition: 'background 0.3s ease'
+                }}
+                onMouseOver={e => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
+                onMouseOut={e => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
+              >
+                {showFutureFeatures ? '🔽' : '▶️'} Future Features
+              </button>
+              
+              {showFutureFeatures && (
+                <div style={{
+                  textAlign: 'left',
+                  fontSize: isMobile ? '0.7rem' : '0.8rem',
+                  lineHeight: '1.3',
+                  maxHeight: '200px',
+                  overflowY: 'auto',
+                  background: 'rgba(0, 0, 0, 0.2)',
+                  borderRadius: '4px',
+                  padding: '8px',
+                  marginBottom: '8px'
+                }}>
+                  {futureFeatures.futureFeatures.map((feature, index) => (
+                    <div key={index} style={{ marginBottom: '4px' }}>
+                      • {feature}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
             
             <div style={{ borderTop: '1px solid #ffffffff', paddingTop: '10px' }}>

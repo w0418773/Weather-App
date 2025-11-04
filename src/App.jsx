@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
+import { faLocationDot, faCircleArrowRight, faCircleArrowDown } from '@fortawesome/free-solid-svg-icons'
 import futureFeatures from './assets/futureFeatures.json'
 import './App.css'
 
@@ -279,7 +279,7 @@ function App() {
             textAlign: 'center'
           }}>
             <h3 style={{ margin: '0 0 10px 0', fontSize: isMobile ? '1rem' : '1.1rem' }}>Site Information</h3>
-            <div style={{ marginBottom: '10px', lineHeight: '1.4' }}>
+            <div style={{ marginBottom: '10px', lineHeight: '1.4', textAlign: 'left' }}>
               <div>• Weather : WeatherAPI</div>
               <div>• Images: Unsplash API</div>
               <div>• Backend: Custom Python API</div>
@@ -299,12 +299,20 @@ function App() {
                   fontSize: isMobile ? '0.8rem' : '0.9rem',
                   width: '100%',
                   marginBottom: '8px',
-                  transition: 'background 0.3s ease'
+                  transition: 'background 0.3s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px'
                 }}
                 onMouseOver={e => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
                 onMouseOut={e => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
               >
-                {showFutureFeatures ? '🔽' : '▶️'} Future Features
+                <FontAwesomeIcon 
+                  icon={showFutureFeatures ? faCircleArrowDown : faCircleArrowRight} 
+                  style={{color: "#764ba2"}} 
+                />
+                Future Features
               </button>
               
               {showFutureFeatures && (
@@ -722,7 +730,7 @@ function App() {
                 padding: isMobile ? '8px 16px' : '10px 20px',
                 fontSize: isMobile ? '0.9rem' : '1rem',
                 borderRadius: 6,
-                background: '#28a745',
+                background: 'linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%)',
                 color: '#fff',
                 border: 'none',
                 cursor: 'pointer',
@@ -733,10 +741,18 @@ function App() {
                 // TODO: Implement weekly forecast functionality
                 console.log('Weekly Forecast clicked');
               }}
-              onMouseOver={e => e.target.style.background = '#218838'}
-              onMouseOut={e => e.target.style.background = '#28a745'}
+              onMouseOver={e => {
+              if (!isLoading) {
+                e.target.style.background = 'linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%)'
+              }
+            }}
+            onMouseOut={e => {
+              if (!isLoading) {
+                e.target.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+              }
+            }}
             >
-              Weekly Forecast
+              Next Three Days
             </button>
           </div>
         )}

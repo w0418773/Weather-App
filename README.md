@@ -2,7 +2,7 @@
 
 A modern, responsive weather application built with React that provides real-time weather data with beautiful, dynamic backgrounds. Get current weather conditions and hourly forecasts with an intuitive, user-friendly interface.
 
-![Weather Wise Demo](https://w0418773.github.io/Weather-App/)
+https://w0418773.github.io/Weather-App/
 
 ## ✨ Features
 

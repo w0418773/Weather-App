@@ -201,23 +201,22 @@ function App() {
           fontFamily: '"Poppins", "Inter", "Segoe UI", sans-serif',
           letterSpacing: '-0.02em',
           textShadow: '0 4px 8px rgba(0,0,0,0.1)',
-          position: 'relative'
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '12px'
         }}>
           Weather Wise
-          <span style={{
-            fontSize: isMobile ? '1.2rem' : '1.5rem',
-            marginLeft: '8px',
-            display: 'inline-block',
-            animation: 'bounce 2s infinite',
-            background: 'none',
-            WebkitBackgroundClip: 'initial',
-            WebkitTextFillColor: 'initial',
-            backgroundClip: 'initial',
-            textShadow: 'none',
-            color: 'initial'
-          }}>
-            ⛅
-          </span>
+          <img 
+            src="https://github.com/w0418773/Weather-App/blob/main/src/assets/weather.png?raw=true"
+            alt="Weather Icon"
+            style={{
+              width: isMobile ? '32px' : '40px',
+              height: isMobile ? '32px' : '40px',
+              animation: 'bounce 2s infinite'
+            }}
+          />
         </h1>
 
         <SearchInput

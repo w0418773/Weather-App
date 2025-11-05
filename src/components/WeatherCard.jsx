@@ -1,15 +1,17 @@
+import { colors } from '../config/colors'
+
 const WeatherCard = ({ title, weatherData, isMobile }) => {
   return (
     <div style={{
-      background: 'rgba(255, 255, 255, 0.9)',
-      border: '1px solid #ddd',
+      background: colors.background.cardSolid,
+      border: `1px solid ${colors.border.medium}`,
       borderRadius: '16px',
       padding: isMobile ? '16px' : '16px',
       minWidth: isMobile ? '280px' : '160px',
       flex: isMobile ? 'none' : '1 1 0',
       maxWidth: isMobile ? '320px' : '180px',
       width: isMobile ? '90%' : 'auto',
-      boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+      boxShadow: `0 4px 12px ${colors.shadow.medium}`,
       transition: 'transform 0.2s ease',
       cursor: 'pointer'
     }}
@@ -19,7 +21,7 @@ const WeatherCard = ({ title, weatherData, isMobile }) => {
       <div style={{
         fontSize: isMobile ? '1.2rem' : '1.2rem',
         fontWeight: '600',
-        color: '#666',
+        color: colors.text.secondary,
         marginBottom: '8px'
       }}>
         {title}
@@ -36,21 +38,21 @@ const WeatherCard = ({ title, weatherData, isMobile }) => {
       <div style={{
         fontSize: isMobile ? '1.8rem' : '1.8rem',
         fontWeight: '700',
-        color: '#333',
+        color: colors.text.primary,
         marginBottom: '6px'
       }}>
         {Math.round(weatherData.temp_c)}°C
       </div>
       <div style={{
         fontSize: isMobile ? '1.0rem' : '1.0rem',
-        color: '#666',
+        color: colors.text.secondary,
         marginBottom: '6px'
       }}>
         {weatherData.condition.text}
       </div>
       <div style={{
         fontSize: isMobile ? '0.9rem' : '0.9rem',
-        color: '#888',
+        color: colors.text.tertiary,
         lineHeight: '1.2'
       }}>
         Feels like {Math.round(weatherData.feelslike_c)}°C<br />

@@ -3,6 +3,8 @@ import InfoCard from './components/InfoCard'
 import WeatherCard from './components/WeatherCard'
 import SearchInput from './components/SearchInput'
 import DevelopmentBanner from './components/DevelopmentBanner'
+import ImageAttribution from './components/ImageAttribution'
+import { generateCSSVariables, colors } from './config/colors'
 import './styles/theme.css'
 import './App.css'
 
@@ -24,13 +26,13 @@ function App() {
 
   useEffect(() => {
     if (bgUrl) {
-      document.body.style.background = `linear-gradient(rgba(234, 246, 251, 0.25), rgba(234, 246, 251, 0.25)), url(${bgUrl}) center/cover no-repeat`
+      document.body.style.background = `linear-gradient(${colors.background.overlay}, ${colors.background.overlay}), url(${bgUrl}) center/cover no-repeat`
     } else {
-      document.body.style.background = '#eaf6fb'
+      document.body.style.background = colors.background.light
     }
     // Clean up on unmount
     return () => {
-      document.body.style.background = '#eaf6fb'
+      document.body.style.background = colors.background.light
     }
   }, [bgUrl])
 
@@ -40,6 +42,17 @@ function App() {
     }
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  useEffect(() => {
+    // Inject color variables into CSS
+    const styleElement = document.createElement('style')
+    styleElement.textContent = generateCSSVariables()
+    document.head.appendChild(styleElement)
+    
+    return () => {
+      document.head.removeChild(styleElement)
+    }
   }, [])
 
   const handleGetWeather = async () => {
@@ -145,7 +158,7 @@ function App() {
                 top: `-10px`,
                 width: '2px',
                 height: `${Math.random() * 20 + 10}px`,
-                background: 'linear-gradient(to bottom, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.3))',
+                background: `linear-gradient(to bottom, ${colors.rain.start}, ${colors.rain.end})`,
                 borderRadius: '1px',
                 animation: `rainDrop ${Math.random() * 2 + 1}s linear infinite`,
                 animationDelay: `${Math.random() * 2}s`
@@ -172,16 +185,16 @@ function App() {
           ? (isMobile ? '70px auto 20px' : '80px auto 40px')
           : (isMobile ? '20px auto' : '40px auto'),
         padding: isMobile ? 16 : 24,
-        background: 'rgba(255, 255, 255, 0.5)',
-        border: '1.5px solid #bbb',
+        background: colors.background.card,
+        border: `1.5px solid ${colors.border.light}`,
         borderRadius: 12,
-        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+        boxShadow: `0 4px 12px ${colors.shadow.medium}`,
         transition: 'background-image 0.8s'
       }}>
         <h1 className="text-center font-bold leading-tight" style={{
           marginBottom: 20, 
           fontSize: isMobile ? '2.2rem' : '3rem',
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          background: `linear-gradient(135deg, ${colors.primary.gradient.start} 0%, ${colors.primary.gradient.end} 100%)`,
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text',
@@ -258,8 +271,8 @@ function App() {
                 padding: isMobile ? '8px 16px' : '10px 20px',
                 fontSize: isMobile ? '0.9rem' : '1rem',
                 borderRadius: 6,
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                color: '#fff',
+                background: `linear-gradient(135deg, ${colors.primary.gradient.start} 0%, ${colors.primary.gradient.end} 100%)`,
+                color: colors.text.white,
                 border: 'none',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
@@ -270,72 +283,22 @@ function App() {
                 console.log('Next Three Days clicked');
               }}
               onMouseOver={e => {
-                e.target.style.background = 'linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%)'
+                e.target.style.background = `linear-gradient(135deg, ${colors.primary.hover} 0%, ${colors.primary.dark} 100%)`
               }}
               onMouseOut={e => {
-                e.target.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                e.target.style.background = `linear-gradient(135deg, ${colors.primary.gradient.start} 0%, ${colors.primary.gradient.end} 100%)`
               }}
             >
               Next Three Days
             </button>
           </div>
         )}
-
-        {imageInfo && (
-          <div style={{
-            position: 'fixed',
-            bottom: isMobile ? '8px' : '20px',
-            right: isMobile ? '8px' : '20px',
-            left: isMobile ? '8px' : 'auto',
-            background: '#764ba2bb',
-            color: '#fff',
-            padding: isMobile ? '6px 8px' : '10px 12px',
-            borderRadius: '6px',
-            fontSize: isMobile ? '0.7rem' : '0.85rem',
-            maxWidth: isMobile ? 'none' : '250px',
-            backdropFilter: 'blur(5px)',
-            boxShadow: '0 2px 10px rgba(0, 0, 0, 0.3)',
-            zIndex: 1000
-          }}>
-            <div style={{ 
-              marginBottom: '2px', 
-              fontWeight: '500',
-              lineHeight: isMobile ? '1.2' : '1.4'
-            }}>
-              Photo by{' '}
-              <a 
-                href={imageInfo.photographer.link} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{ color: '#87ceeb', textDecoration: 'none', transition: 'color 0.3s ease' }}
-                onMouseOver={e => e.target.style.color = '#5dade2'}
-                onMouseOut={e => e.target.style.color = '#87ceeb'}
-              >
-                {imageInfo.photographer.name}
-              </a>
-            </div>
-            <div style={{ 
-              fontSize: isMobile ? '0.65rem' : '0.8rem', 
-              color: '#ccc',
-              lineHeight: isMobile ? '1.2' : '1.4'
-            }}>
-              <div>📍 {imageInfo.location || 'Unknown location'}</div>
-              <div style={{ marginTop: '2px' }}>
-                <a 
-                  href={imageInfo.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  style={{ color: '#87ceeb', textDecoration: 'none', transition: 'color 0.3s ease' }}
-                  onMouseOver={e => e.target.style.color = '#5dade2'}
-                  onMouseOut={e => e.target.style.color = '#87ceeb'}
-                >
-                  {imageInfo.name || 'View Image'}
-                </a>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
+
+      <ImageAttribution 
+        imageInfo={imageInfo}
+        isMobile={isMobile}
+      />
     </>
   )
 }

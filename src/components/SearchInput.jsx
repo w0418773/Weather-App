@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
+import { colors } from '../config/colors'
 
 const SearchInput = ({ 
   location, 
@@ -29,7 +30,7 @@ const SearchInput = ({
           onClick={onGetLocation}
           disabled={isGettingLocation}
           style={{
-            background: isGettingLocation ? '#9ca3af' : '#764ba2',
+            background: isGettingLocation ? colors.status.disabled : colors.primary.base,
             border: 'none',
             borderRadius: '6px',
             padding: '8px',
@@ -43,12 +44,12 @@ const SearchInput = ({
           }}
           onMouseOver={e => {
             if (!isGettingLocation) {
-              e.target.style.background = '#6b46c1'
+              e.target.style.background = colors.primary.hover
             }
           }}
           onMouseOut={e => {
             if (!isGettingLocation) {
-              e.target.style.background = '#764ba2'
+              e.target.style.background = colors.primary.base
             }
           }}
         >
@@ -57,12 +58,12 @@ const SearchInput = ({
               width: '16px',
               height: '16px',
               border: '2px solid transparent',
-              borderTop: '2px solid #fff',
+              borderTop: `2px solid ${colors.text.white}`,
               borderRadius: '50%',
               animation: 'spin 1s linear infinite'
             }}></div>
           ) : (
-            <FontAwesomeIcon icon={faLocationDot} style={{color: "#ffffffff", fontSize: '16px'}} />
+            <FontAwesomeIcon icon={faLocationDot} style={{color: colors.text.white, fontSize: '16px'}} />
           )}
         </button>
         
@@ -81,9 +82,9 @@ const SearchInput = ({
             fontSize: '1rem', 
             width: isMobile ? 'calc(100% - 56px)' : '300px',
             borderRadius: 6, 
-            background: '#ffffffff',
-            color: '#222',
-            border: '1px solid #bbb',
+            background: colors.background.white,
+            color: colors.text.primary,
+            border: `1px solid ${colors.border.light}`,
             height: '40px',
             boxSizing: 'border-box'
           }}
@@ -95,8 +96,8 @@ const SearchInput = ({
           padding: '8px 16px',
           fontSize: '1rem',
           borderRadius: 6,
-          background: isLoading ? '#9ca3af' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          color: '#ffffffff',
+          background: isLoading ? colors.status.disabled : `linear-gradient(135deg, ${colors.primary.gradient.start} 0%, ${colors.primary.gradient.end} 100%)`,
+          color: colors.text.white,
           border: 'none',
           height: '40px',
           minWidth: isMobile ? '100%' : '140px',
@@ -111,12 +112,12 @@ const SearchInput = ({
         disabled={isLoading}
         onMouseOver={e => {
           if (!isLoading) {
-            e.target.style.background = 'linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%)'
+            e.target.style.background = `linear-gradient(135deg, ${colors.primary.hover} 0%, ${colors.primary.dark} 100%)`
           }
         }}
         onMouseOut={e => {
           if (!isLoading) {
-            e.target.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+            e.target.style.background = `linear-gradient(135deg, ${colors.primary.gradient.start} 0%, ${colors.primary.gradient.end} 100%)`
           }
         }}
       >
@@ -126,7 +127,7 @@ const SearchInput = ({
               width: '16px',
               height: '16px',
               border: '2px solid transparent',
-              borderTop: '2px solid #fff',
+              borderTop: `2px solid ${colors.text.white}`,
               borderRadius: '50%',
               animation: 'spin 1s linear infinite'
             }}></div>

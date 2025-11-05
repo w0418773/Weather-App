@@ -1,3 +1,5 @@
+import { colors } from '../config/colors'
+
 const DevelopmentBanner = ({ showDevBanner, setShowDevBanner, isMobile }) => {
   if (!showDevBanner) return null
 
@@ -7,8 +9,8 @@ const DevelopmentBanner = ({ showDevBanner, setShowDevBanner, isMobile }) => {
       top: 0,
       left: 0,
       right: 0,
-      background: 'linear-gradient(135deg, #ff6b6b, #ee5a24)',
-      color: '#fff',
+      background: `linear-gradient(135deg, ${colors.banner.start}, ${colors.banner.end})`,
+      color: colors.text.white,
       padding: isMobile ? '4px 8px' : '8px',
       textAlign: 'center',
       fontSize: isMobile ? '0.75rem' : '0.9rem',
@@ -32,7 +34,7 @@ const DevelopmentBanner = ({ showDevBanner, setShowDevBanner, isMobile }) => {
         style={{
           background: 'rgba(255, 255, 255, 0.2)',
           border: 'none',
-          color: '#fff',
+          color: colors.text.white,
           borderRadius: '50%',
           width: isMobile ? '20px' : '24px',
           height: isMobile ? '20px' : '24px',

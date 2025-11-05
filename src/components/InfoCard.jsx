@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleArrowRight, faCircleArrowDown } from '@fortawesome/free-solid-svg-icons'
+import { colors } from '../config/colors'
 import futureFeatures from '../assets/futureFeatures.json'
 
 const InfoCard = ({ showDevBanner, isMobile }) => {
@@ -17,8 +18,8 @@ const InfoCard = ({ showDevBanner, isMobile }) => {
       <button
         onClick={() => setShowInfoCard(!showInfoCard)}
         style={{
-          background: '#764ba2',
-          color: '#fff',
+          background: colors.primary.base,
+          color: colors.text.white,
           border: 'none',
           borderRadius: '50%',
           width: isMobile ? '35px' : '40px',
@@ -33,11 +34,11 @@ const InfoCard = ({ showDevBanner, isMobile }) => {
           transition: 'all 0.3s ease'
         }}
         onMouseOver={e => {
-          e.currentTarget.style.background = '#6b46c1'
+          e.currentTarget.style.background = colors.primary.hover
           e.currentTarget.style.transform = 'scale(1.1)'
         }}
         onMouseOut={e => {
-          e.currentTarget.style.background = '#764ba2'
+          e.currentTarget.style.background = colors.primary.base
           e.currentTarget.style.transform = 'scale(1)'
         }}
       >
@@ -51,8 +52,8 @@ const InfoCard = ({ showDevBanner, isMobile }) => {
           position: 'absolute',
           top: isMobile ? '40px' : '50px',
           left: '0',
-          background: '#764ba2bb',
-          color: '#ffffffff',
+          background: colors.background.cardGlass,
+          color: colors.text.white,
           padding: isMobile ? '12px' : '16px',
           borderRadius: '8px',
           fontSize: isMobile ? '0.8rem' : '0.9rem',
@@ -71,9 +72,9 @@ const InfoCard = ({ showDevBanner, isMobile }) => {
               href="https://github.com/w0418773/Weather_API_py_PUBLIC" 
               target="_blank" 
               rel="noopener noreferrer"
-              style={{ color: '#87ceeb', textDecoration: 'none', transition: 'color 0.3s ease' }}
-              onMouseOver={e => e.target.style.color = '#5dade2'}
-              onMouseOut={e => e.target.style.color = '#87ceeb'}
+              style={{ color: colors.accent.base, textDecoration: 'none', transition: 'color 0.3s ease' }}
+              onMouseOver={e => e.target.style.color = colors.accent.hover}
+              onMouseOut={e => e.target.style.color = colors.accent.base}
             >
               Custom Python API
             </a></div>
@@ -138,9 +139,9 @@ const InfoCard = ({ showDevBanner, isMobile }) => {
                 href="https://w0418773.github.io/"
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ color: '#87ceeb', textDecoration: 'none', transition: 'color 0.3s ease' }}
-                onMouseOver={e => e.target.style.color = '#5dade2'}
-                onMouseOut={e => e.target.style.color = '#87ceeb'}
+                style={{ color: colors.accent.base, textDecoration: 'none', transition: 'color 0.3s ease' }}
+                onMouseOver={e => e.target.style.color = colors.accent.hover}
+                onMouseOut={e => e.target.style.color = colors.accent.base}
               >
                 Portfolio
               </a>
@@ -148,9 +149,9 @@ const InfoCard = ({ showDevBanner, isMobile }) => {
                 href="https://github.com/w0418773/"
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ color: '#87ceeb', textDecoration: 'none', transition: 'color 0.3s ease' }}
-                onMouseOver={e => e.target.style.color = '#5dade2'}
-                onMouseOut={e => e.target.style.color = '#87ceeb'}
+                style={{ color: colors.accent.base, textDecoration: 'none', transition: 'color 0.3s ease' }}
+                onMouseOver={e => e.target.style.color = colors.accent.hover}
+                onMouseOut={e => e.target.style.color = colors.accent.base}
               >
                 GitHub
               </a>

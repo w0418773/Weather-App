@@ -1,26 +1,7 @@
-/* CSS Variables for consistent theming */
+/* Color variables will be injected by JavaScript */
+/* See colors.js for color definitions */
+
 :root {
-  /* Color Palette */
-  --primary-gradient-start: #667eea;
-  --primary-gradient-end: #764ba2;
-  --primary-color: #764ba2;
-  --primary-hover: #6b46c1;
-  --accent-color: #87ceeb;
-  --accent-hover: #5dade2;
-  --background-light: #eaf6fb;
-  --text-primary: #222;
-  --text-secondary: #666;
-  --text-tertiary: #888;
-  --white: #fff;
-  --error-color: #d00;
-  --success-color: #28a745;
-  --success-hover: #218838;
-  --disabled-color: #9ca3af;
-  
-  /* Development Banner Colors */
-  --dev-banner-start: #ff6b6b;
-  --dev-banner-end: #ee5a24;
-  
   /* Spacing */
   --spacing-xs: 4px;
   --spacing-sm: 8px;
@@ -121,20 +102,20 @@
 
 .btn-primary {
   background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
-  color: var(--white);
+  color: var(--text-white);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, #5a67d8 0%, var(--primary-hover) 100%);
+  background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary-dark) 100%);
 }
 
 .btn-primary:disabled {
-  background: var(--disabled-color);
+  background: var(--status-disabled);
 }
 
 .btn-secondary {
   background: var(--primary-color);
-  color: var(--white);
+  color: var(--text-white);
 }
 
 .btn-secondary:hover:not(:disabled) {
@@ -142,12 +123,12 @@
 }
 
 .btn-success {
-  background: var(--success-color);
-  color: var(--white);
+  background: var(--status-success);
+  color: var(--text-white);
 }
 
 .btn-success:hover:not(:disabled) {
-  background: var(--success-hover);
+  background: var(--status-success-hover);
 }
 
 .btn-circle {

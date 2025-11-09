@@ -1,0 +1,435 @@
+[
+  {
+    "code": 1000,
+    "condition": "Sunny",
+    "activities": [
+      "Go for a hike",
+      "Have a picnic",
+      "Ride a bike",
+      "Visit the beach",
+      "Do some gardening"
+    ]
+  },
+  {
+    "code": 1003,
+    "condition": "Partly cloudy",
+    "activities": [
+      "Take photos",
+      "Go for a jog",
+      "Have lunch outdoors",
+      "Explore the city"
+    ]
+  },
+  {
+    "code": 1006,
+    "condition": "Cloudy",
+    "activities": [
+      "Visit a museum",
+      "Do indoor hobbies",
+      "Try a new recipe",
+      "Relax with a book"
+    ]
+  },
+  {
+    "code": 1009,
+    "condition": "Overcast",
+    "activities": [
+      "Watch movies",
+      "Organize your space",
+      "Plan your week"
+    ]
+  },
+  {
+    "code": 1030,
+    "condition": "Mist",
+    "activities": [
+      "Take fog photos",
+      "Go for a calm walk",
+      "Meditate"
+    ]
+  },
+  {
+    "code": 1063,
+    "condition": "Patchy rain possible",
+    "activities": [
+      "Visit a museum",
+      "Do indoor hobbies",
+      "Try a new recipe",
+      "Relax with a book"
+    ]
+  },
+  {
+    "code": 1066,
+    "condition": "Patchy snow possible",
+    "activities": [
+      "Build a snowman",
+      "Go sledding",
+      "Make hot chocolate"
+    ]
+  },
+  {
+    "code": 1069,
+    "condition": "Patchy sleet possible",
+    "activities": [
+      "Stay home safe",
+      "Enjoy a warm drink"
+    ]
+  },
+  {
+    "code": 1072,
+    "condition": "Patchy freezing drizzle possible",
+    "activities": [
+      "Stay in",
+      "Bake cookies",
+      "Watch a series"
+    ]
+  },
+  {
+    "code": 1087,
+    "condition": "Thundery outbreaks possible",
+    "activities": [
+      "Watch the storm safely",
+      "Read or journal",
+      "Relax indoors"
+    ]
+  },
+  {
+    "code": 1114,
+    "condition": "Blowing snow",
+    "activities": [
+      "Build a snowman",
+      "Go sledding",
+      "Make hot chocolate"
+    ]
+  },
+  {
+    "code": 1117,
+    "condition": "Blizzard",
+    "activities": [
+      "Stay safe inside",
+      "Do puzzles",
+      "Watch your favorite show"
+    ]
+  },
+  {
+    "code": 1135,
+    "condition": "Fog",
+    "activities": [
+      "Stay indoors",
+      "Read something cozy",
+      "Enjoy quiet music"
+    ]
+  },
+  {
+    "code": 1147,
+    "condition": "Freezing fog",
+    "activities": [
+      "Stay indoors",
+      "Read something cozy",
+      "Enjoy quiet music"
+    ]
+  },
+  {
+    "code": 1150,
+    "condition": "Patchy light drizzle",
+    "activities": [
+      "Walk with an umbrella",
+      "Visit a caf\u00e9",
+      "Write or draw"
+    ]
+  },
+  {
+    "code": 1153,
+    "condition": "Light drizzle",
+    "activities": [
+      "Walk with an umbrella",
+      "Visit a caf\u00e9",
+      "Write or draw"
+    ]
+  },
+  {
+    "code": 1168,
+    "condition": "Freezing drizzle",
+    "activities": [
+      "Stay in",
+      "Bake cookies",
+      "Watch a series"
+    ]
+  },
+  {
+    "code": 1171,
+    "condition": "Heavy freezing drizzle",
+    "activities": [
+      "Stay in",
+      "Bake cookies",
+      "Watch a series"
+    ]
+  },
+  {
+    "code": 1180,
+    "condition": "Patchy light rain",
+    "activities": [
+      "Drive and enjoy the rain",
+      "Do creative hobbies",
+      "Cook comfort food"
+    ]
+  },
+  {
+    "code": 1183,
+    "condition": "Light rain",
+    "activities": [
+      "Drive and enjoy the rain",
+      "Do creative hobbies",
+      "Cook comfort food"
+    ]
+  },
+  {
+    "code": 1186,
+    "condition": "Moderate rain at times",
+    "activities": [
+      "Stay indoors",
+      "Watch a film",
+      "Clean your space"
+    ]
+  },
+  {
+    "code": 1189,
+    "condition": "Moderate rain",
+    "activities": [
+      "Stay indoors",
+      "Watch a film",
+      "Clean your space"
+    ]
+  },
+  {
+    "code": 1192,
+    "condition": "Heavy rain at times",
+    "activities": [
+      "Relax indoors",
+      "Play games",
+      "Listen to the rain"
+    ]
+  },
+  {
+    "code": 1195,
+    "condition": "Heavy rain",
+    "activities": [
+      "Relax indoors",
+      "Play games",
+      "Listen to the rain"
+    ]
+  },
+  {
+    "code": 1198,
+    "condition": "Light freezing rain",
+    "activities": [
+      "Visit a museum",
+      "Do indoor hobbies",
+      "Try a new recipe",
+      "Relax with a book"
+    ]
+  },
+  {
+    "code": 1201,
+    "condition": "Moderate or heavy freezing rain",
+    "activities": [
+      "Visit a museum",
+      "Do indoor hobbies",
+      "Try a new recipe",
+      "Relax with a book"
+    ]
+  },
+  {
+    "code": 1204,
+    "condition": "Light sleet",
+    "activities": [
+      "Stay home safe",
+      "Enjoy a warm drink"
+    ]
+  },
+  {
+    "code": 1207,
+    "condition": "Moderate or heavy sleet",
+    "activities": [
+      "Stay home safe",
+      "Enjoy a warm drink"
+    ]
+  },
+  {
+    "code": 1210,
+    "condition": "Patchy light snow",
+    "activities": [
+      "Build a snowman",
+      "Go sledding",
+      "Make hot chocolate"
+    ]
+  },
+  {
+    "code": 1213,
+    "condition": "Light snow",
+    "activities": [
+      "Build a snowman",
+      "Go sledding",
+      "Make hot chocolate"
+    ]
+  },
+  {
+    "code": 1216,
+    "condition": "Patchy moderate snow",
+    "activities": [
+      "Build a snowman",
+      "Go sledding",
+      "Make hot chocolate"
+    ]
+  },
+  {
+    "code": 1219,
+    "condition": "Moderate snow",
+    "activities": [
+      "Build a snowman",
+      "Go sledding",
+      "Make hot chocolate"
+    ]
+  },
+  {
+    "code": 1222,
+    "condition": "Patchy heavy snow",
+    "activities": [
+      "Build a snowman",
+      "Go sledding",
+      "Make hot chocolate"
+    ]
+  },
+  {
+    "code": 1225,
+    "condition": "Heavy snow",
+    "activities": [
+      "Build a snowman",
+      "Go sledding",
+      "Make hot chocolate"
+    ]
+  },
+  {
+    "code": 1237,
+    "condition": "Ice pellets",
+    "activities": [
+      "Stay indoors",
+      "Do crafts",
+      "Play games"
+    ]
+  },
+  {
+    "code": 1240,
+    "condition": "Light rain shower",
+    "activities": [
+      "Drive and enjoy the rain",
+      "Do creative hobbies",
+      "Cook comfort food"
+    ]
+  },
+  {
+    "code": 1243,
+    "condition": "Moderate or heavy rain shower",
+    "activities": [
+      "Relax indoors",
+      "Play games",
+      "Listen to the rain"
+    ]
+  },
+  {
+    "code": 1246,
+    "condition": "Torrential rain shower",
+    "activities": [
+      "Run errands quickly",
+      "Stay in with music"
+    ]
+  },
+  {
+    "code": 1249,
+    "condition": "Light sleet showers",
+    "activities": [
+      "Stay home safe",
+      "Enjoy a warm drink"
+    ]
+  },
+  {
+    "code": 1252,
+    "condition": "Moderate or heavy sleet showers",
+    "activities": [
+      "Stay home safe",
+      "Enjoy a warm drink"
+    ]
+  },
+  {
+    "code": 1255,
+    "condition": "Light snow showers",
+    "activities": [
+      "Build a snowman",
+      "Go sledding",
+      "Make hot chocolate"
+    ]
+  },
+  {
+    "code": 1258,
+    "condition": "Moderate or heavy snow showers",
+    "activities": [
+      "Build a snowman",
+      "Go sledding",
+      "Make hot chocolate"
+    ]
+  },
+  {
+    "code": 1261,
+    "condition": "Light showers of ice pellets",
+    "activities": [
+      "Stay indoors",
+      "Do crafts",
+      "Play games"
+    ]
+  },
+  {
+    "code": 1264,
+    "condition": "Moderate or heavy showers of ice pellets",
+    "activities": [
+      "Stay indoors",
+      "Do crafts",
+      "Play games"
+    ]
+  },
+  {
+    "code": 1273,
+    "condition": "Patchy light rain with thunder",
+    "activities": [
+      "Drive and enjoy the rain",
+      "Do creative hobbies",
+      "Cook comfort food"
+    ]
+  },
+  {
+    "code": 1276,
+    "condition": "Moderate or heavy rain with thunder",
+    "activities": [
+      "Relax indoors",
+      "Play games",
+      "Listen to the rain"
+    ]
+  },
+  {
+    "code": 1279,
+    "condition": "Patchy light snow with thunder",
+    "activities": [
+      "Build a snowman",
+      "Go sledding",
+      "Make hot chocolate"
+    ]
+  },
+  {
+    "code": 1282,
+    "condition": "Moderate or heavy snow with thunder",
+    "activities": [
+      "Build a snowman",
+      "Go sledding",
+      "Make hot chocolate"
+    ]
+  }
+]

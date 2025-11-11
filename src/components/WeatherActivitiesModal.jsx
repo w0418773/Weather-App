@@ -4,10 +4,13 @@ const WeatherActivitiesModal = ({ weatherData, isOpen, onClose, isMobile }) => {
   if (!isOpen || !weatherData) return null
 
   // Use activities from API response, with fallback
-  const activities = weatherData.activities || [
+  const allActivities = weatherData.activities || [
     "No activities available for this weather condition",
     "Check back later for updated suggestions"
   ]
+  
+  // Limit activities to 4 on mobile, show all on desktop
+  const activities = isMobile ? allActivities.slice(0, 4) : allActivities
   
   const temp = Math.round(weatherData.temp_c)
 

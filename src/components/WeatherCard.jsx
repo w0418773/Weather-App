@@ -1,4 +1,6 @@
 import { colors } from '../config/colors'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
 
 const WeatherCard = ({ title, weatherData, isMobile, onClick }) => {
   return (
@@ -31,18 +33,13 @@ const WeatherCard = ({ title, weatherData, isMobile, onClick }) => {
         position: 'absolute',
         top: '8px',
         right: '8px',
-        background: `linear-gradient(135deg, ${colors.primary.gradient.start}, ${colors.primary.gradient.end})`,
-        color: colors.text.white,
-        borderRadius: '50%',
         width: '20px',
         height: '20px',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: '10px',
-        fontWeight: 'bold'
+        justifyContent: 'center'
       }}>
-        ⚡
+        <FontAwesomeIcon icon={faCircleInfo} style={{color: "#764ba2", fontSize: '18px'}} />
       </div>
 
       <div style={{

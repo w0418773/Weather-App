@@ -3,79 +3,12 @@ import { colors } from '../config/colors'
 const WeatherActivitiesModal = ({ weatherData, isOpen, onClose, isMobile }) => {
   if (!isOpen || !weatherData) return null
 
-  const getActivitiesForWeather = (condition, temp) => {
-    const conditionLower = condition.toLowerCase()
-    const temperature = Math.round(temp)
-    
-    // Define activities based on weather conditions
-    const activities = {
-      sunny: [
-        "🏖️ Visit the beach or lake",
-        "🚴‍♂️ Go cycling or biking",
-        "🥾 Take a nature hike",
-        "🧺 Have a picnic in the park",
-        "🏊‍♀️ Go swimming outdoors",
-        "📸 Take outdoor photography",
-        "⛳ Play golf or mini golf",
-        "🌻 Visit a botanical garden"
-      ],
-      cloudy: [
-        "☕ Visit a cozy café",
-        "📚 Read a book in the park",
-        "🚶‍♀️ Take a leisurely walk",
-        "🎨 Outdoor sketching or painting",
-        "🛍️ Go shopping outdoors",
-        "🏛️ Visit museums or galleries",
-        "🎪 Attend outdoor events",
-        "🌳 Explore local parks"
-      ],
-      rainy: [
-        "☕ Enjoy hot drinks indoors",
-        "📖 Read a good book",
-        "🎬 Watch movies or series",
-        "🧩 Work on puzzles",
-        "👨‍🍳 Try cooking new recipes",
-        "🎨 Indoor art projects",
-        "🛁 Take a relaxing bath",
-        "🎮 Play indoor games"
-      ],
-      snowy: [
-        "⛄ Build a snowman",
-        "🎿 Go skiing or snowboarding",
-        "☕ Drink hot chocolate",
-        "🔥 Cozy up by the fireplace",
-        "📚 Read with warm blankets",
-        "🧶 Knitting or crafting",
-        "🏠 Home organization projects",
-        "🎲 Board games with family"
-      ],
-      windy: [
-        "🪁 Fly a kite",
-        "🏠 Stay indoors and relax",
-        "💨 Watch the trees sway",
-        "🌬️ Feel the fresh air (briefly)",
-        "📱 Indoor entertainment",
-        "☕ Warm beverages",
-        "🧘‍♀️ Indoor yoga or meditation",
-        "🎵 Listen to calming music"
-      ]
-    }
-
-    // Determine weather type based on condition
-    if (conditionLower.includes('sun') || conditionLower.includes('clear')) {
-      return activities.sunny
-    } else if (conditionLower.includes('rain') || conditionLower.includes('drizzle') || conditionLower.includes('shower')) {
-      return activities.rainy
-    } else if (conditionLower.includes('snow') || conditionLower.includes('blizzard')) {
-      return activities.snowy
-    } else if (conditionLower.includes('wind')) {
-      return activities.windy
-    } else {
-      return activities.cloudy
-    }
-  }
-
-  const activities = getActivitiesForWeather(weatherData.condition.text, weatherData.temp_c)
+  // Use activities from API response, with fallback
+  const activities = weatherData.activities || [
+    "No activities available for this weather condition",
+    "Check back later for updated suggestions"
+  ]
+  
   const temp = Math.round(weatherData.temp_c)
 
   return (

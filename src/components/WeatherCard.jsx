@@ -1,6 +1,6 @@
 import { colors } from '../config/colors'
 
-const WeatherCard = ({ title, weatherData, isMobile }) => {
+const WeatherCard = ({ title, weatherData, isMobile, onClick }) => {
   return (
     <div style={{
       background: colors.background.cardSolid,
@@ -12,12 +12,39 @@ const WeatherCard = ({ title, weatherData, isMobile }) => {
       maxWidth: isMobile ? '320px' : '180px',
       width: isMobile ? '90%' : 'auto',
       boxShadow: `0 4px 12px ${colors.shadow.medium}`,
-      transition: 'transform 0.2s ease',
-      cursor: 'pointer'
+      transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+      cursor: 'pointer',
+      position: 'relative'
     }}
-    onMouseOver={e => e.currentTarget.style.transform = 'translateY(-4px)'}
-    onMouseOut={e => e.currentTarget.style.transform = 'translateY(0px)'}
+    onMouseOver={e => {
+      e.currentTarget.style.transform = 'translateY(-4px)'
+      e.currentTarget.style.boxShadow = `0 8px 24px ${colors.shadow.medium}`
+    }}
+    onMouseOut={e => {
+      e.currentTarget.style.transform = 'translateY(0px)'
+      e.currentTarget.style.boxShadow = `0 4px 12px ${colors.shadow.medium}`
+    }}
+    onClick={() => onClick && onClick(weatherData)}
     >
+      {/* Click indicator */}
+      <div style={{
+        position: 'absolute',
+        top: '8px',
+        right: '8px',
+        background: `linear-gradient(135deg, ${colors.primary.gradient.start}, ${colors.primary.gradient.end})`,
+        color: colors.text.white,
+        borderRadius: '50%',
+        width: '20px',
+        height: '20px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: '10px',
+        fontWeight: 'bold'
+      }}>
+        ⚡
+      </div>
+
       <div style={{
         fontSize: isMobile ? '1.2rem' : '1.2rem',
         fontWeight: '600',

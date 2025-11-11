@@ -4,6 +4,7 @@ import WeatherCard from './components/WeatherCard'
 import SearchInput from './components/SearchInput'
 import DevelopmentBanner from './components/DevelopmentBanner'
 import ImageAttribution from './components/ImageAttribution'
+import WeatherActivitiesModal from './components/WeatherActivitiesModal'
 import { generateCSSVariables, colors } from './config/colors'
 import './styles/theme.css'
 import './App.css'
@@ -21,6 +22,8 @@ function App() {
   const [showRainAnimation, setShowRainAnimation] = useState(true)
   const [isGettingLocation, setIsGettingLocation] = useState(false)
   const [showFutureFeatures, setShowFutureFeatures] = useState(false)
+  const [selectedWeatherData, setSelectedWeatherData] = useState(null)
+  const [showActivitiesModal, setShowActivitiesModal] = useState(false)
   const BaseURLDev = 'http://localhost:8000'
   const BaseURLProd = 'https://weather-api-py.vercel.app'
 
@@ -134,6 +137,16 @@ function App() {
     )
   }
 
+  const handleWeatherCardClick = (weatherData) => {
+    setSelectedWeatherData(weatherData)
+    setShowActivitiesModal(true)
+  }
+
+  const closeActivitiesModal = () => {
+    setShowActivitiesModal(false)
+    setSelectedWeatherData(null)
+  }
+
   return (
     <>
       {/* Rain Animation */}
@@ -245,6 +258,7 @@ function App() {
                 title="Now"
                 weatherData={weather.current}
                 isMobile={isMobile}
+                onClick={handleWeatherCardClick}
               />
               
               {weather.hourly.length > 0 && (
@@ -252,6 +266,7 @@ function App() {
                   title="+1 Hour"
                   weatherData={weather.hourly[0]}
                   isMobile={isMobile}
+                  onClick={handleWeatherCardClick}
                 />
               )}
               
@@ -260,6 +275,7 @@ function App() {
                   title="+2 Hours"
                   weatherData={weather.hourly[1]}
                   isMobile={isMobile}
+                  onClick={handleWeatherCardClick}
                 />
               )}
             </div>
@@ -296,6 +312,13 @@ function App() {
 
       <ImageAttribution 
         imageInfo={imageInfo}
+        isMobile={isMobile}
+      />
+
+      <WeatherActivitiesModal
+        weatherData={selectedWeatherData}
+        isOpen={showActivitiesModal}
+        onClose={closeActivitiesModal}
         isMobile={isMobile}
       />
     </>

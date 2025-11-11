@@ -7,7 +7,10 @@
       "Have a picnic",
       "Ride a bike",
       "Visit the beach",
-      "Do some gardening"
+      "Do some gardening",
+      "Play outdoor sports",
+      "Go for a drive",
+      "Have a BBQ"
     ]
   },
   {
@@ -17,7 +20,11 @@
       "Take photos",
       "Go for a jog",
       "Have lunch outdoors",
-      "Explore the city"
+      "Explore the city",
+      "Watch a documentary",
+      "Do a puzzle",
+      "Go shopping",
+      "Organize your digital files"
     ]
   },
   {
@@ -27,7 +34,11 @@
       "Visit a museum",
       "Do indoor hobbies",
       "Try a new recipe",
-      "Relax with a book"
+      "Relax with a book",
+      "Watch a documentary",
+      "Do a puzzle",
+      "Go shopping",
+      "Organize your digital files"
     ]
   },
   {
@@ -36,7 +47,12 @@
     "activities": [
       "Watch movies",
       "Organize your space",
-      "Plan your week"
+      "Plan your week",
+      "Watch a documentary",
+      "Do a puzzle",
+      "Go shopping",
+      "Organize your digital files",
+      "Try baking"
     ]
   },
   {
@@ -45,7 +61,12 @@
     "activities": [
       "Take fog photos",
       "Go for a calm walk",
-      "Meditate"
+      "Meditate",
+      "Take aesthetic photos",
+      "Go for a slow drive",
+      "Have a spa day",
+      "Listen to calm music",
+      "Do journaling"
     ]
   },
   {
@@ -55,7 +76,11 @@
       "Visit a museum",
       "Do indoor hobbies",
       "Try a new recipe",
-      "Relax with a book"
+      "Relax with a book",
+      "Watch a cozy movie",
+      "Do some art or painting",
+      "Cook soup or stew",
+      "Play board games"
     ]
   },
   {
@@ -64,7 +89,12 @@
     "activities": [
       "Build a snowman",
       "Go sledding",
-      "Make hot chocolate"
+      "Make hot chocolate",
+      "Go skiing or snowboarding",
+      "Build a snow fort",
+      "Have a snowball fight",
+      "Take winter photos",
+      "Bake cookies"
     ]
   },
   {
@@ -72,7 +102,13 @@
     "condition": "Patchy sleet possible",
     "activities": [
       "Stay home safe",
-      "Enjoy a warm drink"
+      "Enjoy a warm drink",
+      "Stay warm with a blanket",
+      "Make a warm drink",
+      "Watch a comfort show",
+      "Read indoors",
+      "Work on a small project",
+      "Do some online shopping"
     ]
   },
   {
@@ -81,7 +117,12 @@
     "activities": [
       "Stay in",
       "Bake cookies",
-      "Watch a series"
+      "Watch a series",
+      "Bundle up inside",
+      "Make soup",
+      "Read under a blanket",
+      "Play games",
+      "Watch a film marathon"
     ]
   },
   {
@@ -90,7 +131,12 @@
     "activities": [
       "Watch the storm safely",
       "Read or journal",
-      "Relax indoors"
+      "Relax indoors",
+      "Stay cozy with candles",
+      "Read by the window",
+      "Play video games",
+      "Have an indoor picnic",
+      "Call a friend"
     ]
   },
   {
@@ -99,7 +145,12 @@
     "activities": [
       "Build a snowman",
       "Go sledding",
-      "Make hot chocolate"
+      "Make hot chocolate",
+      "Go skiing or snowboarding",
+      "Build a snow fort",
+      "Have a snowball fight",
+      "Take winter photos",
+      "Bake cookies"
     ]
   },
   {
@@ -108,7 +159,12 @@
     "activities": [
       "Stay safe inside",
       "Do puzzles",
-      "Watch your favorite show"
+      "Watch your favorite show",
+      "Watch a documentary",
+      "Do a puzzle",
+      "Go shopping",
+      "Organize your digital files",
+      "Try baking"
     ]
   },
   {
@@ -117,7 +173,12 @@
     "activities": [
       "Stay indoors",
       "Read something cozy",
-      "Enjoy quiet music"
+      "Enjoy quiet music",
+      "Take aesthetic photos",
+      "Go for a slow drive",
+      "Have a spa day",
+      "Listen to calm music",
+      "Meditate"
     ]
   },
   {
@@ -126,7 +187,12 @@
     "activities": [
       "Stay indoors",
       "Read something cozy",
-      "Enjoy quiet music"
+      "Enjoy quiet music",
+      "Take aesthetic photos",
+      "Go for a slow drive",
+      "Have a spa day",
+      "Listen to calm music",
+      "Meditate"
     ]
   },
   {
@@ -135,7 +201,12 @@
     "activities": [
       "Walk with an umbrella",
       "Visit a caf\u00e9",
-      "Write or draw"
+      "Write or draw",
+      "Watch a documentary",
+      "Do a puzzle",
+      "Go shopping",
+      "Organize your digital files",
+      "Try baking"
     ]
   },
   {
@@ -144,7 +215,12 @@
     "activities": [
       "Walk with an umbrella",
       "Visit a caf\u00e9",
-      "Write or draw"
+      "Write or draw",
+      "Watch a documentary",
+      "Do a puzzle",
+      "Go shopping",
+      "Organize your digital files",
+      "Try baking"
     ]
   },
   {
@@ -153,7 +229,12 @@
     "activities": [
       "Stay in",
       "Bake cookies",
-      "Watch a series"
+      "Watch a series",
+      "Bundle up inside",
+      "Make soup",
+      "Read under a blanket",
+      "Play games",
+      "Watch a film marathon"
     ]
   },
   {
@@ -162,7 +243,12 @@
     "activities": [
       "Stay in",
       "Bake cookies",
-      "Watch a series"
+      "Watch a series",
+      "Bundle up inside",
+      "Make soup",
+      "Read under a blanket",
+      "Play games",
+      "Watch a film marathon"
     ]
   },
   {
@@ -171,7 +257,12 @@
     "activities": [
       "Drive and enjoy the rain",
       "Do creative hobbies",
-      "Cook comfort food"
+      "Cook comfort food",
+      "Watch a cozy movie",
+      "Do some art or painting",
+      "Cook soup or stew",
+      "Play board games",
+      "Clean your room"
     ]
   },
   {
@@ -180,7 +271,12 @@
     "activities": [
       "Drive and enjoy the rain",
       "Do creative hobbies",
-      "Cook comfort food"
+      "Cook comfort food",
+      "Watch a cozy movie",
+      "Do some art or painting",
+      "Cook soup or stew",
+      "Play board games",
+      "Clean your room"
     ]
   },
   {
@@ -189,7 +285,12 @@
     "activities": [
       "Stay indoors",
       "Watch a film",
-      "Clean your space"
+      "Clean your space",
+      "Watch a cozy movie",
+      "Do some art or painting",
+      "Cook soup or stew",
+      "Play board games",
+      "Clean your room"
     ]
   },
   {
@@ -198,7 +299,12 @@
     "activities": [
       "Stay indoors",
       "Watch a film",
-      "Clean your space"
+      "Clean your space",
+      "Watch a cozy movie",
+      "Do some art or painting",
+      "Cook soup or stew",
+      "Play board games",
+      "Clean your room"
     ]
   },
   {
@@ -207,7 +313,12 @@
     "activities": [
       "Relax indoors",
       "Play games",
-      "Listen to the rain"
+      "Listen to the rain",
+      "Watch a cozy movie",
+      "Do some art or painting",
+      "Cook soup or stew",
+      "Play board games",
+      "Clean your room"
     ]
   },
   {
@@ -216,7 +327,12 @@
     "activities": [
       "Relax indoors",
       "Play games",
-      "Listen to the rain"
+      "Listen to the rain",
+      "Watch a cozy movie",
+      "Do some art or painting",
+      "Cook soup or stew",
+      "Play board games",
+      "Clean your room"
     ]
   },
   {
@@ -226,7 +342,11 @@
       "Visit a museum",
       "Do indoor hobbies",
       "Try a new recipe",
-      "Relax with a book"
+      "Relax with a book",
+      "Watch a cozy movie",
+      "Do some art or painting",
+      "Cook soup or stew",
+      "Play board games"
     ]
   },
   {
@@ -236,7 +356,11 @@
       "Visit a museum",
       "Do indoor hobbies",
       "Try a new recipe",
-      "Relax with a book"
+      "Relax with a book",
+      "Watch a cozy movie",
+      "Do some art or painting",
+      "Cook soup or stew",
+      "Play board games"
     ]
   },
   {
@@ -244,7 +368,13 @@
     "condition": "Light sleet",
     "activities": [
       "Stay home safe",
-      "Enjoy a warm drink"
+      "Enjoy a warm drink",
+      "Stay warm with a blanket",
+      "Make a warm drink",
+      "Watch a comfort show",
+      "Read indoors",
+      "Work on a small project",
+      "Do some online shopping"
     ]
   },
   {
@@ -252,7 +382,13 @@
     "condition": "Moderate or heavy sleet",
     "activities": [
       "Stay home safe",
-      "Enjoy a warm drink"
+      "Enjoy a warm drink",
+      "Stay warm with a blanket",
+      "Make a warm drink",
+      "Watch a comfort show",
+      "Read indoors",
+      "Work on a small project",
+      "Do some online shopping"
     ]
   },
   {
@@ -261,7 +397,12 @@
     "activities": [
       "Build a snowman",
       "Go sledding",
-      "Make hot chocolate"
+      "Make hot chocolate",
+      "Go skiing or snowboarding",
+      "Build a snow fort",
+      "Have a snowball fight",
+      "Take winter photos",
+      "Bake cookies"
     ]
   },
   {
@@ -270,7 +411,12 @@
     "activities": [
       "Build a snowman",
       "Go sledding",
-      "Make hot chocolate"
+      "Make hot chocolate",
+      "Go skiing or snowboarding",
+      "Build a snow fort",
+      "Have a snowball fight",
+      "Take winter photos",
+      "Bake cookies"
     ]
   },
   {
@@ -279,7 +425,12 @@
     "activities": [
       "Build a snowman",
       "Go sledding",
-      "Make hot chocolate"
+      "Make hot chocolate",
+      "Go skiing or snowboarding",
+      "Build a snow fort",
+      "Have a snowball fight",
+      "Take winter photos",
+      "Bake cookies"
     ]
   },
   {
@@ -288,7 +439,12 @@
     "activities": [
       "Build a snowman",
       "Go sledding",
-      "Make hot chocolate"
+      "Make hot chocolate",
+      "Go skiing or snowboarding",
+      "Build a snow fort",
+      "Have a snowball fight",
+      "Take winter photos",
+      "Bake cookies"
     ]
   },
   {
@@ -297,7 +453,12 @@
     "activities": [
       "Build a snowman",
       "Go sledding",
-      "Make hot chocolate"
+      "Make hot chocolate",
+      "Go skiing or snowboarding",
+      "Build a snow fort",
+      "Have a snowball fight",
+      "Take winter photos",
+      "Bake cookies"
     ]
   },
   {
@@ -306,7 +467,12 @@
     "activities": [
       "Build a snowman",
       "Go sledding",
-      "Make hot chocolate"
+      "Make hot chocolate",
+      "Go skiing or snowboarding",
+      "Build a snow fort",
+      "Have a snowball fight",
+      "Take winter photos",
+      "Bake cookies"
     ]
   },
   {
@@ -315,7 +481,12 @@
     "activities": [
       "Stay indoors",
       "Do crafts",
-      "Play games"
+      "Play games",
+      "Watch a documentary",
+      "Do a puzzle",
+      "Go shopping",
+      "Organize your digital files",
+      "Try baking"
     ]
   },
   {
@@ -324,7 +495,12 @@
     "activities": [
       "Drive and enjoy the rain",
       "Do creative hobbies",
-      "Cook comfort food"
+      "Cook comfort food",
+      "Watch a cozy movie",
+      "Do some art or painting",
+      "Cook soup or stew",
+      "Play board games",
+      "Clean your room"
     ]
   },
   {
@@ -333,7 +509,12 @@
     "activities": [
       "Relax indoors",
       "Play games",
-      "Listen to the rain"
+      "Listen to the rain",
+      "Watch a cozy movie",
+      "Do some art or painting",
+      "Cook soup or stew",
+      "Play board games",
+      "Clean your room"
     ]
   },
   {
@@ -341,7 +522,13 @@
     "condition": "Torrential rain shower",
     "activities": [
       "Run errands quickly",
-      "Stay in with music"
+      "Stay in with music",
+      "Watch a cozy movie",
+      "Do some art or painting",
+      "Cook soup or stew",
+      "Play board games",
+      "Clean your room",
+      "Read a book"
     ]
   },
   {
@@ -349,7 +536,13 @@
     "condition": "Light sleet showers",
     "activities": [
       "Stay home safe",
-      "Enjoy a warm drink"
+      "Enjoy a warm drink",
+      "Stay warm with a blanket",
+      "Make a warm drink",
+      "Watch a comfort show",
+      "Read indoors",
+      "Work on a small project",
+      "Do some online shopping"
     ]
   },
   {
@@ -357,7 +550,13 @@
     "condition": "Moderate or heavy sleet showers",
     "activities": [
       "Stay home safe",
-      "Enjoy a warm drink"
+      "Enjoy a warm drink",
+      "Stay warm with a blanket",
+      "Make a warm drink",
+      "Watch a comfort show",
+      "Read indoors",
+      "Work on a small project",
+      "Do some online shopping"
     ]
   },
   {
@@ -366,7 +565,12 @@
     "activities": [
       "Build a snowman",
       "Go sledding",
-      "Make hot chocolate"
+      "Make hot chocolate",
+      "Go skiing or snowboarding",
+      "Build a snow fort",
+      "Have a snowball fight",
+      "Take winter photos",
+      "Bake cookies"
     ]
   },
   {
@@ -375,7 +579,12 @@
     "activities": [
       "Build a snowman",
       "Go sledding",
-      "Make hot chocolate"
+      "Make hot chocolate",
+      "Go skiing or snowboarding",
+      "Build a snow fort",
+      "Have a snowball fight",
+      "Take winter photos",
+      "Bake cookies"
     ]
   },
   {
@@ -384,7 +593,12 @@
     "activities": [
       "Stay indoors",
       "Do crafts",
-      "Play games"
+      "Play games",
+      "Watch a documentary",
+      "Do a puzzle",
+      "Go shopping",
+      "Organize your digital files",
+      "Try baking"
     ]
   },
   {
@@ -393,7 +607,12 @@
     "activities": [
       "Stay indoors",
       "Do crafts",
-      "Play games"
+      "Play games",
+      "Watch a documentary",
+      "Do a puzzle",
+      "Go shopping",
+      "Organize your digital files",
+      "Try baking"
     ]
   },
   {
@@ -402,7 +621,12 @@
     "activities": [
       "Drive and enjoy the rain",
       "Do creative hobbies",
-      "Cook comfort food"
+      "Cook comfort food",
+      "Watch a cozy movie",
+      "Do some art or painting",
+      "Cook soup or stew",
+      "Play board games",
+      "Clean your room"
     ]
   },
   {
@@ -411,7 +635,12 @@
     "activities": [
       "Relax indoors",
       "Play games",
-      "Listen to the rain"
+      "Listen to the rain",
+      "Watch a cozy movie",
+      "Do some art or painting",
+      "Cook soup or stew",
+      "Play board games",
+      "Clean your room"
     ]
   },
   {
@@ -420,7 +649,12 @@
     "activities": [
       "Build a snowman",
       "Go sledding",
-      "Make hot chocolate"
+      "Make hot chocolate",
+      "Go skiing or snowboarding",
+      "Build a snow fort",
+      "Have a snowball fight",
+      "Take winter photos",
+      "Bake cookies"
     ]
   },
   {
@@ -429,7 +663,12 @@
     "activities": [
       "Build a snowman",
       "Go sledding",
-      "Make hot chocolate"
+      "Make hot chocolate",
+      "Go skiing or snowboarding",
+      "Build a snow fort",
+      "Have a snowball fight",
+      "Take winter photos",
+      "Bake cookies"
     ]
   }
 ]

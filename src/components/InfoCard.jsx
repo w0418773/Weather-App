@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleArrowRight, faCircleArrowDown } from '@fortawesome/free-solid-svg-icons'
-import { colors } from '../config/colors'
+import { useTheme } from '../contexts/ThemeContext'
 import futureFeatures from '../assets/futureFeatures.json'
 
 const InfoCard = ({ showDevBanner, isMobile }) => {
   const [showInfoCard, setShowInfoCard] = useState(false)
   const [showFutureFeatures, setShowFutureFeatures] = useState(false)
+  const { colors } = useTheme()
 
   return (
     <div style={{

@@ -1,6 +1,8 @@
-import { colors } from '../config/colors'
+import { useTheme } from '../contexts/ThemeContext'
 
 const DevelopmentBanner = ({ showDevBanner, setShowDevBanner, isMobile }) => {
+  const { colors } = useTheme()
+  
   if (!showDevBanner) return null
 
   return (

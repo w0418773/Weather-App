@@ -5,11 +5,13 @@ import SearchInput from './components/SearchInput'
 import DevelopmentBanner from './components/DevelopmentBanner'
 import ImageAttribution from './components/ImageAttribution'
 import WeatherActivitiesModal from './components/WeatherActivitiesModal'
+import ThemeToggle from './components/ThemeToggle'
+import { ThemeProvider, useTheme } from './contexts/ThemeContext'
 import { generateCSSVariables, colors } from './config/colors'
 import './styles/theme.css'
 import './App.css'
 
-function App() {
+function AppContent() {
   const [location, setLocation] = useState('')
   const [weather, setWeather] = useState(null)
   const [error, setError] = useState('')
@@ -26,6 +28,7 @@ function App() {
   const [showActivitiesModal, setShowActivitiesModal] = useState(false)
   const BaseURLDev = 'http://localhost:8000'
   const BaseURLProd = 'https://weather-api-py.vercel.app'
+  const { colors } = useTheme()
 
   useEffect(() => {
     if (bgUrl) {
@@ -37,7 +40,7 @@ function App() {
     return () => {
       document.body.style.background = colors.background.light
     }
-  }, [bgUrl])
+  }, [bgUrl, colors.background.light, colors.background.overlay])
 
   useEffect(() => {
     const handleResize = () => {
@@ -192,6 +195,11 @@ function App() {
         isMobile={isMobile}
       />
 
+      <ThemeToggle 
+        showDevBanner={showDevBanner}
+        isMobile={isMobile}
+      />
+
       <div style={{
         maxWidth: isMobile ? '95vw' : 600,
         margin: showDevBanner 
@@ -322,6 +330,14 @@ function App() {
         isMobile={isMobile}
       />
     </>
+  )
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   )
 }
 

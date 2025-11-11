@@ -1,16 +1,12 @@
-export const colors = {
+export const lightTheme = {
   // Primary Colors
   primary: {
-    gradient: {
-      start: '#667eea',
-      end: '#764ba2'
-    },
+    gradient: { start: '#667eea', end: '#764ba2' },
     base: '#764ba2',
     hover: '#6b46c1',
     light: '#8b5fbf',
     dark: '#5a3d85'
   },
-
   // Accent Colors
   accent: {
     base: '#87ceeb',
@@ -18,7 +14,6 @@ export const colors = {
     light: '#a8d8f0',
     dark: '#4a9bc1'
   },
-
   // Background Colors
   background: {
     light: '#eaf6fb',
@@ -28,7 +23,6 @@ export const colors = {
     cardSolid: 'rgba(255, 255, 255, 0.9)',
     cardGlass: 'rgba(118, 75, 162, 0.733)'
   },
-
   // Text Colors
   text: {
     primary: '#222222',
@@ -37,7 +31,6 @@ export const colors = {
     white: '#ffffff',
     light: '#cccccc'
   },
-
   // Status Colors
   status: {
     error: '#d00000',
@@ -47,26 +40,19 @@ export const colors = {
     info: '#17a2b8',
     disabled: '#9ca3af'
   },
-
   // Development Banner
-  banner: {
-    start: '#ff6b6b',
-    end: '#ee5a24'
-  },
-
+  banner: { start: '#ff6b6b', end: '#ee5a24' },
   // Border Colors
   border: {
     light: '#bbbbbb',
     medium: '#dddddd',
     white: '#ffffff'
   },
-
   // Rain Animation Colors
   rain: {
     start: 'rgba(102, 126, 234, 0.8)',
     end: 'rgba(118, 75, 162, 0.3)'
   },
-
   // Shadow Colors
   shadow: {
     light: 'rgba(0, 0, 0, 0.2)',
@@ -75,64 +61,129 @@ export const colors = {
   }
 }
 
+export const darkTheme = {
+  // Primary Colors
+  primary: {
+    gradient: { start: '#667eea', end: '#764ba2' },
+    base: '#764ba2',
+    hover: '#8b5fbf',
+    light: '#9d7bc7',
+    dark: '#5a3d85'
+  },
+  // Accent Colors
+  accent: {
+    base: '#87ceeb',
+    hover: '#a8d8f0',
+    light: '#c1e4f7',
+    dark: '#4a9bc1'
+  },
+  // Background Colors
+  background: {
+    light: '#1a1a1a',
+    white: '#2d2d2d',
+    overlay: 'rgba(0, 0, 0, 0.4)',
+    card: 'rgba(45, 45, 45, 0.8)',
+    cardSolid: 'rgba(45, 45, 45, 0.95)',
+    cardGlass: 'rgba(118, 75, 162, 0.8)'
+  },
+  // Text Colors
+  text: {
+    primary: '#ffffff',
+    secondary: '#cccccc',
+    tertiary: '#999999',
+    white: '#ffffff',
+    light: '#888888'
+  },
+  // Status Colors
+  status: {
+    error: '#ff4444',
+    success: '#44aa44',
+    successHover: '#399739',
+    warning: '#ffaa00',
+    info: '#44aaff',
+    disabled: '#666666'
+  },
+  // Development Banner
+  banner: { start: '#ff6b6b', end: '#ee5a24' },
+  // Border Colors
+  border: {
+    light: '#444444',
+    medium: '#555555',
+    white: '#666666'
+  },
+  // Rain Animation Colors
+  rain: {
+    start: 'rgba(102, 126, 234, 0.6)',
+    end: 'rgba(118, 75, 162, 0.3)'
+  },
+  // Shadow Colors
+  shadow: {
+    light: 'rgba(0, 0, 0, 0.4)',
+    medium: 'rgba(0, 0, 0, 0.3)',
+    dark: 'rgba(0, 0, 0, 0.6)'
+  }
+}
+
+export const colors = lightTheme // Default to light theme
+
 // CSS Custom Properties Generator
-export const generateCSSVariables = () => {
+export const generateCSSVariables = (theme = lightTheme) => {
   return `
     :root {
       /* Primary Colors */
-      --primary-gradient-start: ${colors.primary.gradient.start};
-      --primary-gradient-end: ${colors.primary.gradient.end};
-      --primary-color: ${colors.primary.base};
-      --primary-hover: ${colors.primary.hover};
-      --primary-light: ${colors.primary.light};
-      --primary-dark: ${colors.primary.dark};
+      --primary-gradient-start: ${theme.primary.gradient.start};
+      --primary-gradient-end: ${theme.primary.gradient.end};
+      --primary-color: ${theme.primary.base};
+      --primary-hover: ${theme.primary.hover};
+      --primary-light: ${theme.primary.light};
+      --primary-dark: ${theme.primary.dark};
 
       /* Accent Colors */
-      --accent-color: ${colors.accent.base};
-      --accent-hover: ${colors.accent.hover};
-      --accent-light: ${colors.accent.light};
-      --accent-dark: ${colors.accent.dark};
+      --accent-color: ${theme.accent.base};
+      --accent-hover: ${theme.accent.hover};
+      --accent-light: ${theme.accent.light};
+      --accent-dark: ${theme.accent.dark};
 
       /* Background Colors */
-      --background-light: ${colors.background.light};
-      --background-white: ${colors.background.white};
-      --background-overlay: ${colors.background.overlay};
-      --background-card: ${colors.background.card};
-      --background-card-solid: ${colors.background.cardSolid};
-      --background-card-glass: ${colors.background.cardGlass};
+      --background-light: ${theme.background.light};
+      --background-white: ${theme.background.white};
+      --background-overlay: ${theme.background.overlay};
+      --background-card: ${theme.background.card};
+      --background-card-solid: ${theme.background.cardSolid};
+      --background-card-glass: ${theme.background.cardGlass};
 
       /* Text Colors */
-      --text-primary: ${colors.text.primary};
-      --text-secondary: ${colors.text.secondary};
-      --text-tertiary: ${colors.text.tertiary};
-      --text-white: ${colors.text.white};
-      --text-light: ${colors.text.light};
+      --text-primary: ${theme.text.primary};
+      --text-secondary: ${theme.text.secondary};
+      --text-tertiary: ${theme.text.tertiary};
+      --text-white: ${theme.text.white};
+      --text-light: ${theme.text.light};
 
       /* Status Colors */
-      --status-error: ${colors.status.error};
-      --status-success: ${colors.status.success};
-      --status-success-hover: ${colors.status.successHover};
-      --status-warning: ${colors.status.warning};
-      --status-info: ${colors.status.info};
-      --status-disabled: ${colors.status.disabled};
+      --status-error: ${theme.status.error};
+      --status-success: ${theme.status.success};
+      --status-success-hover: ${theme.status.successHover};
+      --status-warning: ${theme.status.warning};
+      --status-info: ${theme.status.info};
+      --status-disabled: ${theme.status.disabled};
 
       /* Banner Colors */
-      --banner-start: ${colors.banner.start};
-      --banner-end: ${colors.banner.end};
+      --banner-start: ${theme.banner.start};
+      --banner-end: ${theme.banner.end};
 
       /* Border Colors */
-      --border-light: ${colors.border.light};
-      --border-medium: ${colors.border.medium};
-      --border-white: ${colors.border.white};
+      --border-light: ${theme.border.light};
+      --border-medium: ${theme.border.medium};
+      --border-white: ${theme.border.white};
 
       /* Rain Colors */
-      --rain-start: ${colors.rain.start};
-      --rain-end: ${colors.rain.end};
+      --rain-start: ${theme.rain.start};
+      --rain-end: ${theme.rain.end};
 
       /* Shadow Colors */
-      --shadow-light: ${colors.shadow.light};
-      --shadow-medium: ${colors.shadow.medium};
-      --shadow-dark: ${colors.shadow.dark};
+      --shadow-light: ${theme.shadow.light};
+      --shadow-medium: ${theme.shadow.medium};
+      --shadow-dark: ${theme.shadow.dark};
     }
   `
 }

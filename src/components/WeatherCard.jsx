@@ -1,8 +1,10 @@
-import { colors } from '../config/colors'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
+import { useTheme } from '../contexts/ThemeContext'
 
 const WeatherCard = ({ title, weatherData, isMobile, onClick }) => {
+  const { colors } = useTheme()
+
   return (
     <div style={{
       background: colors.background.cardSolid,
@@ -39,7 +41,7 @@ const WeatherCard = ({ title, weatherData, isMobile, onClick }) => {
         alignItems: 'center',
         justifyContent: 'center'
       }}>
-        <FontAwesomeIcon icon={faCircleInfo} style={{color: "#764ba2", fontSize: '18px'}} />
+        <FontAwesomeIcon icon={faCircleInfo} style={{color: colors.primary.base, fontSize: '18px'}} />
       </div>
 
       <div style={{

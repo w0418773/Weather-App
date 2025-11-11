@@ -1,6 +1,8 @@
-import { colors } from '../config/colors'
+import { useTheme } from '../contexts/ThemeContext'
 
 const WeatherActivitiesModal = ({ weatherData, isOpen, onClose, isMobile }) => {
+  const { colors } = useTheme()
+  
   if (!isOpen || !weatherData) return null
 
   // Use activities from API response, with fallback

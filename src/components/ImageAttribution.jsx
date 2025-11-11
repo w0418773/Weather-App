@@ -1,6 +1,8 @@
-import { colors } from '../config/colors'
+import { useTheme } from '../contexts/ThemeContext'
 
 const ImageAttribution = ({ imageInfo, isMobile }) => {
+  const { colors } = useTheme()
+  
   if (!imageInfo) return null
 
   return (

@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
-import { colors } from '../config/colors'
+import { useTheme } from '../contexts/ThemeContext'
 
 const SearchInput = ({ 
   location, 
@@ -11,6 +11,8 @@ const SearchInput = ({
   isGettingLocation, 
   isMobile 
 }) => {
+  const { colors } = useTheme()
+
   return (
     <div style={{
       marginBottom: 18, 

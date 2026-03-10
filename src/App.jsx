@@ -5,6 +5,8 @@ import SearchInput from './components/SearchInput'
 import DevelopmentBanner from './components/DevelopmentBanner'
 import ImageAttribution from './components/ImageAttribution'
 import WeatherActivitiesModal from './components/WeatherActivitiesModal'
+import WeatherAlerts from './components/WeatherAlerts'
+import AirQuality from './components/AirQuality'
 import ThemeToggle from './components/ThemeToggle'
 import { ThemeProvider, useTheme } from './contexts/ThemeContext'
 import { generateCSSVariables, colors } from './config/colors'
@@ -230,7 +232,7 @@ function AppContent() {
         }}>
           Weather Wise
           <img 
-            src="https://github.com/w0418773/Weather-App/blob/main/src/assets/weather.png?raw=true"
+            src="https://raw.githubusercontent.com/w0418773/Weather-App/refs/heads/main/src/assets/weather.png"
             alt="Weather Icon"
             style={{
               width: isMobile ? '32px' : '40px',
@@ -258,6 +260,7 @@ function AppContent() {
           <div className="text-center text-primary" style={{marginTop: 24}}>
             <h2 className="mb-xl font-xl">{weather.location.name}, {weather.location.region ? weather.location.region + ', ' : ''}{weather.location.country}</h2>
             
+            {/* Weather Cards */}
             <div className="flex gap-md justify-center items-center mb-xl" style={{
               flexDirection: isMobile ? 'column' : 'row',
               alignItems: isMobile ? 'center' : 'stretch'
@@ -287,6 +290,18 @@ function AppContent() {
                 />
               )}
             </div>
+
+            {/* Weather Alerts Section - Always show with dummy data */}
+            <WeatherAlerts 
+              alerts={null} // Pass null to trigger dummy data
+              isMobile={isMobile} 
+            />
+
+            {/* Air Quality Section - Always show with dummy data */}
+            <AirQuality 
+              airQuality={null} // Pass null to trigger dummy data
+              isMobile={isMobile} 
+            />
 
             <button 
               style={{
